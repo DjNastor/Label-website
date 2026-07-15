@@ -1,0 +1,26 @@
+Ojuju — Logo / display
+https://fonts.google.com/specimen/Ojuju
+
+League Spartan — Headings / branding
+https://fonts.google.com/specimen/League+Spartan
+
+Montserrat — Artist names / bold text
+https://fonts.google.com/specimen/Montserrat
+
+Inter — Metadata / body copy
+https://fonts.google.com/specimen/Inter
+
+Anton — Posters / promo headlines
+https://fonts.google.com/specimen/Anton
+
+Bebas Neue — Track titles / condensed display
+https://fonts.google.com/specimen/Bebas+Neue
+
+Oswald — Secondary headings
+https://fonts.google.com/specimen/Oswald
+
+Archivo Black — Heavy display type
+https://fonts.google.com/specimen/Archivo+Black
+
+Manrope — Web / UI typography
+https://fonts.google.com/specimen/Manrope

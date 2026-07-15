@@ -1,0 +1,21 @@
+AFRO HOUSE FONT PAIRINGS
+
+1. PREMIUM LABEL
+Logo: Ojuju
+Heading: League Spartan Bold
+Body: Inter Medium
+
+2. FESTIVAL / CLUB POSTER
+Main title: Anton
+Artist names: Montserrat ExtraBold
+Details: Oswald Medium
+
+3. MINIMAL COVER ART
+Track title: Bebas Neue
+Artist: League Spartan
+Metadata: Manrope
+
+4. AFRO-ORGANIC COVER
+Logo/title: Ojuju
+Supporting text: Montserrat
+Metadata: Inter
