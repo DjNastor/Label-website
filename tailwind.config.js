@@ -21,6 +21,7 @@ export default {
       fontFamily: {
         syne: ['Syne', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+        'league-spartan': ['"League Spartan"', 'sans-serif'],
       }
     },
   },
