@@ -79,10 +79,10 @@ export default function Home() {
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Lukulu Recordings home">
           <img
-            src="/assets/lukulu-metal-logo.png"
+            src="/assets/lukulu-silver-mark.jpg"
             alt=""
-            width="1024"
-            height="1024"
+            width="400"
+            height="400"
           />
           <span>
             <strong>LUKULU</strong>
@@ -153,10 +153,10 @@ export default function Home() {
             <div className="hero-frame">
               <div className="hero-vinyl-ring" aria-hidden="true" />
               <img
-                src="/assets/lukulu-metal-logo.png"
-                alt="Lukulu wooden Africa logo with speakers and African drums"
-                width="1024"
-                height="1024"
+                src="/assets/lukulu-silver-mark.jpg"
+                alt="Silver metallic Lukulu Africa mark with a speaker and African instruments"
+                width="400"
+                height="400"
                 fetchPriority="high"
               />
             </div>
@@ -318,17 +318,13 @@ export default function Home() {
         </section>
 
         <section className="story" id="about">
-          <div
-            className="story-art"
-            role="img"
-            aria-label="Colorful Lukulu African pattern artwork"
-          >
-            <div className="story-pattern-crop" aria-hidden="true">
+          <div className="story-art">
+            <div className="story-pattern-crop">
               <img
-                src="/assets/lukulu-pattern.jpg"
-                alt=""
-                width="1536"
-                height="1536"
+                src="/assets/lukulu-textile-wordmark.jpg"
+                alt="Lukulu wordmark over richly colored African textile artwork"
+                width="1200"
+                height="630"
                 loading="lazy"
                 decoding="async"
               />
@@ -441,10 +437,10 @@ export default function Home() {
 
         <section className="contact" id="contact">
           <img
-            src="/assets/lukulu-metal-logo.png"
-            alt="Lukulu Recordings"
-            width="1024"
-            height="1024"
+            src="/assets/lukulu-wood-mark.jpg"
+            alt="Wooden Lukulu Africa mark with a speaker and drum"
+            width="400"
+            height="400"
             loading="lazy"
             decoding="async"
           />

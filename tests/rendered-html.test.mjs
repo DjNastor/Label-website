@@ -55,7 +55,9 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /id="artists"/);
   assert.match(html, /id="about"/);
   assert.match(html, /id="contact"/);
-  assert.match(html, /Lukulu wooden Africa logo with speakers and African drums/);
+  assert.match(html, /Silver metallic Lukulu Africa mark with a speaker and African instruments/);
+  assert.match(html, /Lukulu wordmark over richly colored African textile artwork/);
+  assert.match(html, /Wooden Lukulu Africa mark with a speaker and drum/);
   assert.match(html, /lukulurecordings@gmail\.com/);
   assert.match(html, /https:\/\/www\.traxsource\.com\/label\/53294\/lukulu-recordings/);
   assert.match(html, /https:\/\/open\.spotify\.com\/playlist\/6skrxjmzEL0trnVnysbDdW/);
@@ -90,11 +92,13 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
   }
 
   for (const asset of [
-    "lukulu-metal-logo.png",
+    "lukulu-silver-mark.jpg",
+    "lukulu-favicon.jpg",
     "reach-deep.jpg",
     "massive.jpg",
     "winter-go2.jpg",
-    "lukulu-pattern.jpg",
+    "lukulu-textile-wordmark.jpg",
+    "lukulu-wood-mark.jpg",
     "dj-nastor.jpg",
   ]) {
     await access(new URL(`../public/assets/${asset}`, import.meta.url));

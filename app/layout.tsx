@@ -7,8 +7,12 @@ export const metadata: Metadata = {
     "Lukulu Recordings is a South African independent label releasing Afro House, Afro-Tech and 3-Step music from Ladysmith to the world.",
   applicationName: "Lukulu Recordings",
   icons: {
-    icon: "/assets/lukulu-metal-logo.png",
-    shortcut: "/assets/lukulu-metal-logo.png",
+    icon: {
+      url: "/assets/lukulu-favicon.jpg",
+      type: "image/jpeg",
+      sizes: "32x32",
+    },
+    shortcut: "/assets/lukulu-favicon.jpg",
   },
 };
 

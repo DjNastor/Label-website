@@ -9,6 +9,8 @@
   --bone: #f4eee4;
   --paper: #e8dece;
   --red: #a62e2e;
+  --forest: #17442f;
+  --ochre: #d6a12b;
   --line-dark: rgba(18, 13, 10, 0.22);
   --line-light: rgba(244, 238, 228, 0.2);
   --display: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Narrow",
@@ -2051,8 +2053,8 @@ section[id] {
   min-height: clamp(43rem, 62vw, 58rem);
   overflow: hidden;
   background:
-    linear-gradient(145deg, rgba(18, 13, 10, 0.08), rgba(18, 13, 10, 0.5)),
-    var(--wood);
+    linear-gradient(145deg, rgba(18, 13, 10, 0.08), rgba(18, 13, 10, 0.56)),
+    var(--forest);
 }
 
 .story-art::before {
@@ -2093,14 +2095,14 @@ section[id] {
   overflow: hidden;
   background:
     linear-gradient(120deg, rgba(18, 13, 10, 0.18), transparent 60%),
-    #74685d;
+    #102b20;
 }
 
 .story-pattern-crop::after {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, transparent 42%, rgba(18, 13, 10, 0.52)),
+    linear-gradient(to bottom, rgba(18, 13, 10, 0.04), transparent 38%, rgba(18, 13, 10, 0.62)),
     repeating-linear-gradient(90deg, transparent 0 3rem, rgba(18, 13, 10, 0.09) 3rem calc(3rem + 1px));
   content: "";
   pointer-events: none;
@@ -2110,10 +2112,9 @@ section[id] {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  filter: saturate(1.08) contrast(1.08) sepia(0.08);
-  transform: scaleY(12);
-  transform-origin: center top;
+  object-position: center 46%;
+  filter: saturate(0.94) contrast(1.08) brightness(0.92);
+  transform: scale(1.015);
 }
 
 .story-pattern-field {
@@ -2134,7 +2135,9 @@ section[id] {
     linear-gradient(135deg, rgba(244, 238, 228, 0.1), transparent 45%),
     var(--copper);
   color: var(--ink);
-  box-shadow: -1.4rem -1.4rem 0 rgba(18, 13, 10, 0.2);
+  box-shadow:
+    -1.4rem -1.4rem 0 rgba(23, 68, 47, 0.55),
+    inset 0 0.28rem 0 rgba(214, 161, 43, 0.78);
 }
 
 .story-pattern-field::before {
@@ -2520,6 +2523,8 @@ section[id] {
   object-fit: cover;
   object-position: center top;
   filter: contrast(1.08);
+  transform: scale(1.1);
+  transform-origin: center top;
   transition:
     filter 600ms ease,
     transform 900ms var(--ease);
@@ -2543,7 +2548,7 @@ section[id] {
 
 .spotlight:hover .spotlight-image img {
   filter: contrast(1.13) sepia(0.06);
-  transform: scale(1.025);
+  transform: scale(1.125);
 }
 
 .spotlight-copy {
@@ -2693,8 +2698,10 @@ section[id] {
   aspect-ratio: 1;
   justify-self: center;
   object-fit: cover;
+  object-position: center;
   border: 1px solid rgba(244, 238, 228, 0.21);
   background: #050403;
+  filter: saturate(0.9) contrast(1.06);
   box-shadow:
     1.15rem 1.15rem 0 rgba(191, 113, 71, 0.18),
     0 2.5rem 5rem rgba(0, 0, 0, 0.42);
@@ -3270,11 +3277,11 @@ footer > p {
   }
 
   .contact > img {
-    width: min(100%, 22rem);
-    height: clamp(8rem, 34vw, 10rem);
-    aspect-ratio: auto;
+    width: min(46vw, 13.5rem);
+    height: auto;
+    aspect-ratio: 1;
     justify-self: start;
-    object-position: center 48%;
+    object-position: center;
   }
 
   .contact h2 {
@@ -3421,6 +3428,10 @@ footer > p {
   .spotlight:hover .spotlight-image img,
   .contact:hover > img {
     transform: none;
+  }
+
+  .spotlight:hover .spotlight-image img {
+    transform: scale(1.1);
   }
 }
 
