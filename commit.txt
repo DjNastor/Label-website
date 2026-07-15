@@ -1,0 +1,5 @@
+Link Vercel project to lukulu-hub domain
+
+App is now live at https://lukulu-hub.vercel.app
+
+Co-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>
