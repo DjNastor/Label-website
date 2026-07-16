@@ -1,0 +1,22 @@
+{
+  "snapshots": [
+    {
+      "timestamp": "2026-07-16T04:38:07.033Z",
+      "score": 90,
+      "label": "Healthy",
+      "critical": 0,
+      "warning": 1,
+      "info": 5,
+      "totalSmells": 6,
+      "fileCount": 6,
+      "layerCoverage": {
+        "api": 0,
+        "service": 0,
+        "data": 2,
+        "external": 0,
+        "background": 2,
+        "config": 2
+      }
+    }
+  ]
+}
