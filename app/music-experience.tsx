@@ -17,6 +17,15 @@ const selectedSounds: SelectedSound[] = [
     type: "Afro House",
     image: "/assets/massive.jpg",
     alt: "Massive by DJ Nastor",
+    previewUrl: "/audio/dj-nastor-massive.mp3",
+  },
+  {
+    title: "Follow The Sign",
+    artist: "DJ Nastor",
+    type: "Afro-Tech",
+    image: "/assets/dj-nastor.jpg",
+    alt: "Follow The Sign by DJ Nastor",
+    previewUrl: "/audio/dj-nastor-follow-the-sign.mp3",
   },
   {
     title: "Lukulu Winter GO2",
