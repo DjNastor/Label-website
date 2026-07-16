@@ -45,8 +45,3 @@ const worker = {
 };
 
 export default worker;
-app.get('/login', (req, res) => {
-  const scopes = ['user-read-private', 'user-read-email', 'streaming'];
-  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'state');
-  res.redirect(authorizeURL);
-});

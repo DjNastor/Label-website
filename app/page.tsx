@@ -1,58 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 
 import MobileMenu from "./mobile-menu";
+import { AudioPreviewProvider, PreviewPlayer } from "./audio-preview-player";
+import { CatalogProvider, ReleaseList } from "./catalog-client";
+import MusicExperience from "./music-experience";
+import NewsFeed from "./news-client";
 
 const catalogUrl = "https://www.traxsource.com/label/53294/lukulu-recordings";
+const beatportUrl = "https://www.beatport.com/label/lukulu-recordings/53294";
+const labelRadarUrl = "https://www.labelradar.com/labels/LukuluRecordings/portal";
 const spotifyPlaylistUrl =
   "https://open.spotify.com/playlist/6skrxjmzEL0trnVnysbDdW";
-
-const releases = [
-  {
-    title: "Amalangabi",
-    artist: "DJ Nastor & Zamachunu Mchunu",
-    date: "10 JUL 2026",
-    dateTime: "2026-07-10",
-    code: "CAT1948348",
-  },
-  {
-    title: "Malupha",
-    artist: "DJ Mukumu",
-    date: "01 JUL 2026",
-    dateTime: "2026-07-01",
-    code: "CAT1920022",
-  },
-  {
-    title: "Plastic Thunder",
-    artist: "Da Cord",
-    date: "26 JUN 2026",
-    dateTime: "2026-06-26",
-    code: "CAT1905905",
-  },
-];
-
-const selectedSounds = [
-  {
-    title: "Reach Deep",
-    artist: "DJ Nastor",
-    type: "Afro House",
-    image: "/assets/reach-deep.jpg",
-    alt: "Reach Deep by DJ Nastor",
-  },
-  {
-    title: "Massive",
-    artist: "DJ Nastor",
-    type: "Afro House",
-    image: "/assets/massive.jpg",
-    alt: "Massive by DJ Nastor",
-  },
-  {
-    title: "Lukulu Winter GO2",
-    artist: "Various Artists",
-    type: "DJ Chart",
-    image: "/assets/winter-go2.jpg",
-    alt: "Lukulu Winter GO2 by Various Artists",
-  },
-];
 
 const artists = [
   "DJ Nastor",
@@ -71,7 +29,7 @@ function ExternalArrow() {
 
 export default function Home() {
   return (
-    <>
+    <AudioPreviewProvider>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -92,14 +50,18 @@ export default function Home() {
 
         <nav className="desktop-nav" aria-label="Main navigation">
           <a href="#releases">Releases</a>
+          <a href="#news">News</a>
           <a href="#artists">Artists</a>
+          <a href="#submissions">Submit</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
 
         <a
           className="header-cta"
-          href="mailto:lukulurecordings@gmail.com?subject=Demo%20submission"
+          href={labelRadarUrl}
+          target="_blank"
+          rel="noreferrer"
         >
           Send a demo <ExternalArrow />
         </a>
@@ -194,13 +156,17 @@ export default function Home() {
           </a>
           <nav aria-label="Sticky navigation">
             <a href="#releases">Releases</a>
+            <a href="#news">News</a>
             <a href="#artists">Artists</a>
+            <a href="#submissions">Submit</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </nav>
           <a
             className="sticky-demo"
-            href="mailto:lukulurecordings@gmail.com?subject=Demo%20submission"
+            href={labelRadarUrl}
+            target="_blank"
+            rel="noreferrer"
           >
             Send a demo <ExternalArrow />
           </a>
@@ -218,38 +184,9 @@ export default function Home() {
           </div>
 
           <div className="release-layout">
-            <div className="release-list">
-              {releases.map((release, index) => (
-                <a
-                  className="release-row"
-                  href={catalogUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  key={release.title}
-                  aria-label={
-                    release.title +
-                    " by " +
-                    release.artist +
-                    " on Traxsource"
-                  }
-                >
-                  <span className="release-number">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <time className="release-date" dateTime={release.dateTime}>
-                    {release.date}
-                  </time>
-                  <span className="release-info">
-                    <strong>{release.title}</strong>
-                    <small>{release.artist}</small>
-                  </span>
-                  <span className="release-code">{release.code}</span>
-                  <span className="play" aria-hidden="true">
-                    &#9654;
-                  </span>
-                </a>
-              ))}
-            </div>
+            <CatalogProvider>
+              <ReleaseList />
+            </CatalogProvider>
 
             <aside className="coming-next">
               <p className="mini-label">COMING NEXT</p>
@@ -282,39 +219,21 @@ export default function Home() {
             <h2 id="sounds-title">Selected sounds</h2>
           </div>
 
-          <div className="cover-grid">
-            {selectedSounds.map((sound) => (
-              <a
-                className="cover-card"
-                href={catalogUrl}
-                target="_blank"
-                rel="noreferrer"
-                key={sound.title}
-                aria-label={
-                  sound.title + " by " + sound.artist + " on Traxsource"
-                }
-              >
-                <div className="cover-image">
-                  <img
-                    src={sound.image}
-                    alt={sound.alt}
-                    width="1200"
-                    height="1200"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="cover-play" aria-hidden="true">
-                    &#9654;
-                  </span>
-                </div>
-                <div className="cover-copy">
-                  <p>{sound.type}</p>
-                  <h3>{sound.title}</h3>
-                  <span>{sound.artist}</span>
-                </div>
-              </a>
-            ))}
+          <MusicExperience catalogUrl={catalogUrl} spotifyUrl={spotifyPlaylistUrl} />
+        </section>
+
+        <section className="section news" id="news" aria-labelledby="news-title">
+          <div className="section-heading">
+            <p className="eyebrow">
+              <span /> Signal feed
+            </p>
+            <h2 id="news-title">News</h2>
+            <a href="/api/news" target="_blank" rel="noreferrer">
+              Live feed <ExternalArrow />
+            </a>
           </div>
+
+          <NewsFeed />
         </section>
 
         <section className="story" id="about">
@@ -362,6 +281,9 @@ export default function Home() {
               <a href={catalogUrl} target="_blank" rel="noreferrer">
                 Traxsource <ExternalArrow />
               </a>
+              <a href={beatportUrl} target="_blank" rel="noreferrer">
+                Beatport <ExternalArrow />
+              </a>
               <a
                 href={spotifyPlaylistUrl}
                 target="_blank"
@@ -403,6 +325,52 @@ export default function Home() {
                 <b aria-hidden="true">↗</b>
               </a>
             ))}
+          </div>
+        </section>
+
+        <section
+          className="submission-portal"
+          id="submissions"
+          aria-labelledby="submissions-title"
+        >
+          <div className="submission-copy">
+            <p className="eyebrow eyebrow-light">
+              <span /> Demo portal
+            </p>
+            <h2 id="submissions-title">LabelRadar submissions</h2>
+            <p>
+              Send unreleased Afro House, Afro-Tech and 3-Step demos through the
+              Lukulu Recordings LabelRadar portal. The portal opens in a focused
+              dark container so artists stay inside the label experience.
+            </p>
+            <div className="story-links">
+              <a href={labelRadarUrl} target="_blank" rel="noreferrer">
+                Open LabelRadar <ExternalArrow />
+              </a>
+              <a href={catalogUrl} target="_blank" rel="noreferrer">
+                Study the catalog <ExternalArrow />
+              </a>
+            </div>
+          </div>
+          <div
+            className="portal-frame"
+            aria-label="Lukulu Recordings LabelRadar Portal"
+          >
+            <iframe
+              title="Lukulu Recordings LabelRadar Portal"
+              src={labelRadarUrl}
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            <div className="portal-fallback">
+              <strong>LabelRadar portal</strong>
+              <span>
+                Embedded preview may be blocked by LabelRadar security headers.
+              </span>
+              <a href={labelRadarUrl} target="_blank" rel="noreferrer">
+                Launch portal <ExternalArrow />
+              </a>
+            </div>
           </div>
         </section>
 
@@ -482,9 +450,16 @@ export default function Home() {
           <a href={catalogUrl} target="_blank" rel="noreferrer">
             Traxsource
           </a>
+          <a href={beatportUrl} target="_blank" rel="noreferrer">
+            Beatport
+          </a>
+          <a href={labelRadarUrl} target="_blank" rel="noreferrer">
+            LabelRadar
+          </a>
         </div>
         <p>&copy; 2026 Lukulu Recordings</p>
       </footer>
-    </>
+      <PreviewPlayer />
+    </AudioPreviewProvider>
   );
 }

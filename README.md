@@ -27,6 +27,28 @@ This starter does not use `wrangler.jsonc`.
 - `examples/d1/` contains an optional D1 example surface
 - `drizzle.config.ts` supports local migration generation when needed
 
+## Lukulu Recordings Integrations
+
+- `/api/catalog-sync` is the platform catalog refresh contract. It tries the
+  configured Traxsource and Beatport label URLs, returns normalized release
+  rows, and falls back to the curated catalog when a source blocks or times out.
+- `/api/news` is the News tab aggregation contract. Set comma-separated
+  `SOCIAL_FEED_URLS` to RSS, Atom, JSON Feed, or simple JSON endpoints; the UI
+  auto-refreshes every five minutes.
+- Demo submissions route through the Lukulu Recordings LabelRadar portal:
+  `https://www.labelradar.com/labels/LukuluRecordings/portal`.
+- The persistent preview player supports `previewUrl` fields in catalog data.
+  Until platform preview URLs are available, it keeps track metadata, Buy links,
+  and Stream links active while disabling playback honestly.
+
+Optional production env vars:
+
+```ini
+TRAXSOURCE_LABEL_URL=https://www.traxsource.com/label/53294/lukulu-recordings
+BEATPORT_LABEL_URL=https://www.beatport.com/label/lukulu-recordings/53294
+SOCIAL_FEED_URLS=
+```
+
 ## Workspace Auth Headers
 
 OpenAI workspace sites can read the current user's email from

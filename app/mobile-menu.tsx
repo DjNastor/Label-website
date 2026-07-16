@@ -58,8 +58,14 @@ export default function MobileMenu() {
         <a href="#releases" onClick={closeMenu}>
           Releases
         </a>
+        <a href="#news" onClick={closeMenu}>
+          News
+        </a>
         <a href="#artists" onClick={closeMenu}>
           Artists
+        </a>
+        <a href="#submissions" onClick={closeMenu}>
+          Submit
         </a>
         <a href="#about" onClick={closeMenu}>
           About

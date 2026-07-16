@@ -9,6 +9,7 @@ export type CatalogRelease = {
   dateTime: string;
   code: string;
   href: string;
+  previewUrl?: string;
 };
 
 export type CatalogArtist = {
@@ -20,7 +21,7 @@ export type CatalogArtist = {
 export type PublicCatalog = {
   releases: CatalogRelease[];
   artists: CatalogArtist[];
-  source: "fallback" | "supabase";
+  source: "fallback" | "platforms" | "supabase";
 };
 
 const fallbackReleases: CatalogRelease[] = [
@@ -134,6 +135,29 @@ function releaseHref(dspLinks: unknown): string {
   return catalogUrl;
 }
 
+function releasePreviewUrl(row: Record<string, unknown>): string | undefined {
+  const links = asObject(row.dsp_links);
+  const directUrl =
+    asPublicUrl(row.previewUrl) ??
+    asPublicUrl(row.preview_url) ??
+    asPublicUrl(row.audio_preview_url);
+
+  if (directUrl) {
+    return directUrl;
+  }
+
+  for (const key of ["preview_url", "previewUrl", "audioPreviewUrl"]) {
+    const value = links?.[key];
+    const nestedUrl = asPublicUrl(value) ?? asPublicUrl(asObject(value)?.url);
+
+    if (nestedUrl) {
+      return nestedUrl;
+    }
+  }
+
+  return undefined;
+}
+
 function displayDate(date: string): string | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return null;
@@ -184,6 +208,7 @@ function normalizeRelease(value: unknown): CatalogRelease | null {
     dateTime,
     code,
     href: releaseHref(row.dsp_links),
+    previewUrl: releasePreviewUrl(row),
   };
 }
 
@@ -240,9 +265,20 @@ export function normalizePublicCatalog(value: unknown): PublicCatalog {
     return fallbackCatalog;
   }
 
+  return catalogFromReleases(normalized, "supabase");
+}
+
+export function catalogFromReleases(
+  releases: CatalogRelease[],
+  source: PublicCatalog["source"],
+): PublicCatalog {
+  if (releases.length === 0) {
+    return fallbackCatalog;
+  }
+
   return {
-    releases: mergeReleases(normalized),
-    artists: mergeArtists(normalized),
-    source: "supabase",
+    releases: mergeReleases(releases),
+    artists: mergeArtists(releases),
+    source,
   };
 }
