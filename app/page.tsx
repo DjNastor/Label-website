@@ -178,6 +178,10 @@ export default function Home() {
               <span /> Fresh from Lukulu
             </p>
             <h2>Latest releases</h2>
+            <p>
+              Beatport Greenroom label account 12524 now feeds the public
+              release lane.
+            </p>
             <a href={catalogUrl} target="_blank" rel="noreferrer">
               View the full catalog <ExternalArrow />
             </a>

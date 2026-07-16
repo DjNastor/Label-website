@@ -16,6 +16,16 @@ export type NewsPayload = {
 
 export const fallbackNews: NewsItem[] = [
   {
+    id: "greenroom-catalog-sync",
+    title: "Beatport Greenroom catalog snapshot added",
+    summary:
+      "The latest Lukulu Recordings Greenroom upload confirms the label account and expands the public release lane with the newest 2026 Beatport rows.",
+    source: "Beatport Greenroom",
+    href: "https://greenroom-app.beatport.com/music",
+    publishedAt: "2026-07-16T14:45:00.000Z",
+    type: "release",
+  },
+  {
     id: "release-amalangabi",
     title: "Amalangabi lands in the Lukulu release lane",
     summary:

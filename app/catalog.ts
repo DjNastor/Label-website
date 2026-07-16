@@ -1,6 +1,16 @@
 export const catalogUrl =
   "https://www.traxsource.com/label/53294/lukulu-recordings";
 
+export const beatportLabelUrl =
+  "https://www.beatport.com/label/lukulu-recordings/53294";
+
+export const beatportGreenroomLabel = {
+  id: 12524,
+  resourceId: 90528,
+  type: "Label",
+  name: "Lukulu Recordings",
+};
+
 export type CatalogRelease = {
   id: string;
   title: string;
@@ -32,25 +42,180 @@ const fallbackReleases: CatalogRelease[] = [
     date: "10 JUL 2026",
     dateTime: "2026-07-10",
     code: "CAT1948348",
-    href: catalogUrl,
+    href: beatportLabelUrl,
   },
   {
-    id: "CAT1920022",
+    id: "beatport-malupha-2026-07-01",
     title: "Malupha",
-    artist: "DJ Mukumu",
+    artist: "DJ Mukumu & DJ Nastor",
     date: "01 JUL 2026",
     dateTime: "2026-07-01",
-    code: "CAT1920022",
-    href: catalogUrl,
+    code: "GREENROOM",
+    href: beatportLabelUrl,
   },
   {
-    id: "CAT1905905",
+    id: "beatport-plastic-thunder-2026-06-26",
     title: "Plastic Thunder",
     artist: "Da Cord",
     date: "26 JUN 2026",
     dateTime: "2026-06-26",
-    code: "CAT1905905",
-    href: catalogUrl,
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-a-zulu-man-2026-06-19",
+    title: "A zulu man",
+    artist: "DJ Nastor & Crash Zulu",
+    date: "19 JUN 2026",
+    dateTime: "2026-06-19",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-unauthorized-2026-06-19",
+    title: "Unauthorized",
+    artist: "Lukulu & Vorn Annunaki",
+    date: "19 JUN 2026",
+    dateTime: "2026-06-19",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-faces-2026-06-19",
+    title: "Faces",
+    artist: "DJ Nastor & Lukulu",
+    date: "19 JUN 2026",
+    dateTime: "2026-06-19",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-mtaka-2026-06-19",
+    title: "Mtaka",
+    artist: "Mah Marvin & Da Cord",
+    date: "19 JUN 2026",
+    dateTime: "2026-06-19",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-deep-deep-2026-06-15",
+    title: "Deep Deep",
+    artist: "Dubnakave",
+    date: "15 JUN 2026",
+    dateTime: "2026-06-15",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-trooth-2026-06-12",
+    title: "Trooth",
+    artist: "DJ Nastor",
+    date: "12 JUN 2026",
+    dateTime: "2026-06-12",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-inhliziyo-dj-nastor-dubnakave-2026-06-05",
+    title: "Inhliziyo",
+    artist: "DJ Nastor & Dubnakave",
+    date: "05 JUN 2026",
+    dateTime: "2026-06-05",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-ilanga-ii-2026-06-01",
+    title: "Ilanga (II)",
+    artist: "Tyro & DJ Nastor",
+    date: "01 JUN 2026",
+    dateTime: "2026-06-01",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-massive-2026-06-01",
+    title: "Massive",
+    artist: "DJ Nastor",
+    date: "01 JUN 2026",
+    dateTime: "2026-06-01",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+    previewUrl: "/audio/dj-nastor-massive.mp3",
+  },
+  {
+    id: "beatport-follow-the-sign-2026-05-29",
+    title: "Follow the sign",
+    artist: "DJ Nastor & Lukulu",
+    date: "29 MAY 2026",
+    dateTime: "2026-05-29",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+    previewUrl: "/audio/dj-nastor-follow-the-sign.mp3",
+  },
+  {
+    id: "beatport-phezulu-2026-05-22",
+    title: "Phezulu",
+    artist: "DJ Mbuso, DJ Nastor & The Skyscraper",
+    date: "22 MAY 2026",
+    dateTime: "2026-05-22",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-goodtime-2026-05-22",
+    title: "Goodtime",
+    artist: "DJ Nastor",
+    date: "22 MAY 2026",
+    dateTime: "2026-05-22",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-sunday-2026-05-22",
+    title: "Sunday",
+    artist: "DJ Nastor",
+    date: "22 MAY 2026",
+    dateTime: "2026-05-22",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-twelapele-2026-05-16",
+    title: "Twelapele",
+    artist: "DJ Nastor, Lukulu & Victor Matalane",
+    date: "16 MAY 2026",
+    dateTime: "2026-05-16",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-cheza-chini-2026-05-15",
+    title: "Cheza chini",
+    artist: "DJ Nastor",
+    date: "15 MAY 2026",
+    dateTime: "2026-05-15",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-mayeh-2026-05-09",
+    title: "Mayeh",
+    artist: "Lukulu",
+    date: "09 MAY 2026",
+    dateTime: "2026-05-09",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
+  },
+  {
+    id: "beatport-reach-deep-2026-05-08",
+    title: "Reach Deep",
+    artist: "DJ Nastor & Lukulu",
+    date: "08 MAY 2026",
+    dateTime: "2026-05-08",
+    code: "GREENROOM",
+    href: beatportLabelUrl,
   },
 ];
 
@@ -227,7 +392,7 @@ function mergeReleases(releases: CatalogRelease[]): CatalogRelease[] {
       seen.add(key);
       return true;
     })
-    .slice(0, 3);
+    .slice(0, 20);
 }
 
 function mergeArtists(releases: CatalogRelease[]): CatalogArtist[] {

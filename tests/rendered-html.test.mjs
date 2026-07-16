@@ -124,6 +124,10 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /https:\/\/open\.spotify\.com\/playlist\/6skrxjmzEL0trnVnysbDdW/);
   assert.match(html, /LabelRadar submissions/);
   assert.match(html, /Signal feed/);
+  assert.match(html, /Beatport Greenroom label account 12524/);
+  assert.match(html, /A zulu man/);
+  assert.match(html, /Follow the sign/);
+  assert.match(html, /Beatport Greenroom catalog snapshot added/);
   assert.match(html, /aria-label="Audio preview player"/);
   assert.match(html, /Select a catalog track/);
   assert.match(html, /Preview unavailable/);
@@ -176,6 +180,13 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
     "dj-nastor.jpg",
   ]) {
     await access(new URL(`../public/assets/${asset}`, import.meta.url));
+  }
+
+  for (const audio of [
+    "dj-nastor-follow-the-sign.mp3",
+    "dj-nastor-massive.mp3",
+  ]) {
+    await access(new URL(`../public/audio/${audio}`, import.meta.url));
   }
 
   for (const font of [
