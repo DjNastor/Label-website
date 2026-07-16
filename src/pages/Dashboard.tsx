@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { MusicIcon, FileTextIcon, AlertTriangleIcon, CheckCircleIcon, PlusIcon, UploadIcon, BookOpenIcon, AwardIcon } from 'lucide-react';
+import { MusicIcon, FileTextIcon, AlertTriangleIcon, CheckCircleIcon, PlusIcon, UploadIcon, BookOpenIcon, AwardIcon, BotIcon } from 'lucide-react';
 import { Page } from '../components/Navbar';
 import { documentLabels, Song } from '../lib/songs';
 
@@ -49,9 +48,10 @@ export function Dashboard({ setPage, songs, selectSong }: DashboardProps) {
         </div>
 
         <h2 className="text-xl font-bold mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {[
             { page: 'contract' as Page, icon: UploadIcon, title: 'Analyze Contract', copy: 'Upload a deal and get plain-language risk flags.' },
+            { page: 'intelligence' as Page, icon: BotIcon, title: 'AI Intelligence', copy: 'Import catalogues, artist profiles, social feeds, and label news.' },
             { page: 'knowledge' as Page, icon: BookOpenIcon, title: 'Knowledge Hub', copy: 'Learn about SAMRO, CAPASSO, SAMPRA, and royalties.' },
             { page: 'quiz' as Page, icon: AwardIcon, title: 'Take the Quiz', copy: 'Test your knowledge on music rights in South Africa.' }
           ].map((action) => (

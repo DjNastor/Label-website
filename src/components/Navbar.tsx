@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MenuIcon, XIcon, MusicIcon } from 'lucide-react';
 export type Page =
@@ -8,7 +8,8 @@ export type Page =
 'generated-docs' |
 'contract' |
 'knowledge' |
-'quiz';
+'quiz' |
+'intelligence';
 interface NavbarProps {
   currentPage: Page;
   setPage: (page: Page) => void;
@@ -30,6 +31,10 @@ export function Navbar({ currentPage, setPage }: NavbarProps) {
   {
     name: 'Contracts',
     page: 'contract'
+  },
+  {
+    name: 'Intelligence',
+    page: 'intelligence'
   },
   {
     name: 'Knowledge Hub',

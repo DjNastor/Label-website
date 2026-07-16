@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar, Page } from './components/Navbar';
 import { LandingPage } from './pages/LandingPage';
@@ -8,9 +8,12 @@ import { GeneratedDocs } from './pages/GeneratedDocs';
 import { ContractAnalyzer } from './pages/ContractAnalyzer';
 import { KnowledgeHub } from './pages/KnowledgeHub';
 import { Quiz } from './pages/Quiz';
+import { LabelIntelligence } from './pages/LabelIntelligence';
+import { defaultWorkspace, LabelWorkspace, spotifyCatalogueSeed } from './lib/intelligence';
 import { defaultSongs, Song } from './lib/songs';
 
 const storageKey = 'phusha-songs';
+const workspaceStorageKey = 'phusha-label-workspace';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('landing');
@@ -22,11 +25,47 @@ export function App() {
       return defaultSongs;
     }
   });
+  const [workspace, setWorkspace] = useState<LabelWorkspace>(() => {
+    try {
+      const stored = window.localStorage.getItem(workspaceStorageKey);
+      return stored ? { ...defaultWorkspace, ...JSON.parse(stored) } : defaultWorkspace;
+    } catch {
+      return defaultWorkspace;
+    }
+  });
   const [activeSongId, setActiveSongId] = useState(songs[0]?.id ?? '');
 
   useEffect(() => {
     window.localStorage.setItem(storageKey, JSON.stringify(songs));
   }, [songs]);
+
+  useEffect(() => {
+    window.localStorage.setItem(workspaceStorageKey, JSON.stringify(workspace));
+  }, [workspace]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const spotifyState = params.get('spotify');
+    if (spotifyState !== 'connected') return;
+
+    setCurrentPage('intelligence');
+    setWorkspace((current) => ({
+      ...current,
+      spotifyStatus: 'connected',
+      spotifyAccount: params.get('account') ?? 'Spotify for Artists',
+      lastApiSyncAt: new Date().toISOString(),
+      lastApiError: ''
+    }));
+
+    params.delete('spotify');
+    params.delete('account');
+    const cleanQuery = params.toString();
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ''}${window.location.hash}`
+    );
+  }, []);
 
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0];
 
@@ -34,6 +73,19 @@ export function App() {
     setSongs((current) => [song, ...current.filter((item) => item.id !== song.id)]);
     setActiveSongId(song.id);
     setCurrentPage('generated-docs');
+  };
+
+  const importSpotifyCatalogue = (sourceSongs = spotifyCatalogueSeed) => {
+    const existingIsrcs = new Set(songs.map((song) => song.isrc));
+    const importedSongs = sourceSongs.filter((song) => !existingIsrcs.has(song.isrc));
+    setSongs((current) => [...importedSongs, ...current]);
+    if (importedSongs[0]) {
+      setActiveSongId(importedSongs[0].id);
+    }
+    return {
+      imported: importedSongs.length,
+      skipped: sourceSongs.length - importedSongs.length
+    };
   };
 
   const pageVariants = {
@@ -71,6 +123,15 @@ export function App() {
         return <KnowledgeHub setPage={setCurrentPage} />;
       case 'quiz':
         return <Quiz setPage={setCurrentPage} />;
+      case 'intelligence':
+        return (
+          <LabelIntelligence
+            songs={songs}
+            workspace={workspace}
+            updateWorkspace={setWorkspace}
+            importCatalogue={importSpotifyCatalogue}
+          />
+        );
       default:
         return <LandingPage setPage={setCurrentPage} />;
     }

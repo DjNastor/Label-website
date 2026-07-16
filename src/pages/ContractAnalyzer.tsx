@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangleIcon, CheckCircleIcon, FileTextIcon, InfoIcon, ShieldCheckIcon, UploadIcon } from 'lucide-react';
 import { Page } from '../components/Navbar';

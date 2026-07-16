@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { DownloadIcon, ShareIcon, FileTextIcon, CheckCircleIcon } from 'lucide-react';
 import { Page } from '../components/Navbar';
@@ -30,7 +30,7 @@ export function GeneratedDocs({ setPage, song }: GeneratedDocsProps) {
     );
   }
 
-  const fileName = `${currentTab?.label.replaceAll(' ', '_')}_${song.title.replaceAll(' ', '_')}.${activeTab === 'metadata' ? 'csv' : 'pdf'}`;
+  const fileName = `${sanitizeFilePart(currentTab?.label ?? 'Document')}_${sanitizeFilePart(song.title)}.${activeTab === 'metadata' ? 'csv' : 'pdf'}`;
 
   return (
     <div className="min-h-screen bg-navy py-12">
@@ -134,4 +134,8 @@ export function GeneratedDocs({ setPage, song }: GeneratedDocsProps) {
       </div>
     </div>
   );
+}
+
+function sanitizeFilePart(value: string) {
+  return value.trim().replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
 }
