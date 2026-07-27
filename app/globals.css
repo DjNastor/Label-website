@@ -4081,3 +4081,46 @@ footer > p {
     border-color: CanvasText;
   }
 }
+
+
+/* 2026 studio pass: turn the label site into a tactile listening desk. */
+:root { --ink:#100b09; --coal:#17110e; --brown:#43251a; --wood:#70432a; --copper:#c9784b; --clay:#d99568; --sand:#e2cdb2; --bone:#f7f0e5; --paper:#eee3d2; --line-dark:rgba(16,11,9,.19); }
+body { background:var(--paper); }
+.hero { min-height:min(100svh,58rem); background:radial-gradient(circle at 78% 42%,rgba(201,120,75,.3),transparent 23rem),radial-gradient(circle at 12% 82%,rgba(112,67,42,.22),transparent 25rem),linear-gradient(118deg,#0b0807 0%,var(--coal) 54%,#2b1810 100%); }
+.hero-copy { max-width:58rem; }
+.hero h1 { max-width:11ch; font-size:clamp(4.35rem,7.8vw,8.8rem); text-wrap:pretty; }
+.hero-intro { max-width:31rem; color:rgba(247,240,229,.75); }
+.hero-art { width:min(37vw,37rem); margin-right:0; }
+.hero-frame { box-shadow:1.1rem 1.1rem 0 rgba(201,120,75,.2),0 3.5rem 6.5rem rgba(0,0,0,.56),inset 0 0 0 .55rem rgba(247,240,229,.04); }
+.hero-art figcaption { left:-2.1rem; background:var(--clay); }
+.sticky-rail { min-height:4.25rem; padding-inline:var(--page-gutter); background:rgba(247,240,229,.96); backdrop-filter:blur(12px); }
+.sticky-rail nav { gap:clamp(1rem,2vw,2.15rem); }
+.sticky-rail nav a { color:rgba(16,11,9,.72); font-size:.62rem; }
+.sticky-rail nav a:hover,.sticky-rail nav a:focus-visible { color:var(--copper); }
+.sticky-brand { color:var(--ink); font-family:var(--display); font-size:.9rem; letter-spacing:.07em; }
+.sticky-brand span { color:var(--copper); font-family:var(--mono); font-size:.58rem; }
+.sticky-demo { color:var(--ink); font-size:.62rem; }
+.section-heading { margin-bottom:clamp(2.75rem,5vw,5rem); padding-bottom:1.6rem; }
+.section-heading h2 { max-width:9ch; font-size:clamp(3.8rem,7.5vw,8.1rem); }
+.section-heading > p:not(.eyebrow) { max-width:24rem; align-self:end; color:rgba(16,11,9,.65); font-family:var(--serif); font-size:1rem; line-height:1.55; }
+.release-row { min-height:clamp(7.25rem,9vw,9.5rem); grid-template-columns:2.25rem minmax(6rem,.58fr) minmax(13rem,1.8fr) minmax(5rem,.65fr) 3rem; }
+.release-row[aria-pressed="true"] { background:rgba(247,240,229,.34); }
+.release-info strong { font-size:clamp(1.9rem,2.8vw,3.45rem); }
+.play { width:2.8rem; }
+.coming-next { min-height:30rem; box-shadow:.8rem .8rem 0 rgba(112,67,42,.2),0 2rem 4rem rgba(16,11,9,.13); }
+.cover-grid { gap:clamp(1.15rem,2.4vw,2.7rem); }
+.cover-card:nth-child(2) { margin-top:clamp(2.8rem,5vw,5.7rem); }
+.cover-card:nth-child(3) { margin-top:clamp(.8rem,2vw,2.4rem); }
+.cover-image { box-shadow:.55rem .55rem 0 rgba(201,120,75,.24),0 1.5rem 2.5rem rgba(16,11,9,.12); }
+.cover-copy h3 { font-size:clamp(2rem,3vw,3.65rem); }
+.news-status { align-items:end; }
+.news-status span { border-color:var(--ink); background:var(--ink); }
+.news-card { transition:transform 300ms var(--ease),box-shadow 300ms ease; }
+.news-card:hover,.news-card:focus-within { box-shadow:.55rem .55rem 0 rgba(201,120,75,.3); transform:translateY(-.25rem); }
+.artist-list a { min-height:clamp(5.5rem,6.4vw,7rem); }
+.artist-list strong { font-size:clamp(2rem,3.5vw,4.2rem); }
+.contact { background:radial-gradient(circle at 15% 48%,rgba(201,120,75,.22),transparent 18rem),linear-gradient(112deg,#0d0908,#1d110d 55%,#2a1710); }
+.contact h2 { max-width:8ch; }
+footer { background:var(--ink); color:var(--bone); }
+@media (max-width:56rem) { .hero{min-height:auto;} .hero h1{max-width:100%;font-size:clamp(4rem,12.5vw,7rem);} .hero-art{width:min(77vw,35rem);} .section-heading h2{max-width:10ch;} .release-row{grid-template-columns:2rem minmax(5rem,.55fr) minmax(0,1.8fr) 2.8rem;} .release-code{display:none;} }
+@media (max-width:42rem) { .hero h1{max-width:9ch;font-size:clamp(3.35rem,15.8vw,5rem);} .hero-art{width:min(91vw,32rem);} .section-heading > p:not(.eyebrow){font-size:.96rem;} .release-row{grid-template-columns:1.7rem minmax(4.55rem,.55fr) minmax(0,1fr) 2.55rem;gap:.7rem;min-height:6.8rem;padding-inline:.45rem;} .release-date{white-space:normal;font-size:.59rem;line-height:1.2;} .release-info strong{font-size:clamp(1.55rem,7.2vw,2.4rem);} .release-info small{overflow:hidden;font-size:.76rem;text-overflow:ellipsis;white-space:nowrap;} .play{width:2.45rem;} .news-status{align-items:start;flex-direction:column;} .news-status p{text-align:left;} }

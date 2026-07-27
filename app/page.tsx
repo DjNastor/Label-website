@@ -83,8 +83,8 @@ export default function Home() {
             </h1>
 
             <p className="hero-intro">
-              Independent Afro House and Afro-Tech shaped by African soul,
-              modern electronic energy and dance-floor purpose.
+              Independent Afro House and Afro-Tech from Ladysmith —
+              shaped by African soul, modern electronic energy and dance-floor purpose.
             </p>
 
             <div className="hero-actions">
@@ -179,8 +179,8 @@ export default function Home() {
             </p>
             <h2>Latest releases</h2>
             <p>
-              Beatport Greenroom label account 12524 now feeds the public
-              release lane.
+              A working release desk for new cuts, catalog staples and the next
+              movement in the Lukulu story.
             </p>
             <a href={catalogUrl} target="_blank" rel="noreferrer">
               View the full catalog <ExternalArrow />
@@ -344,8 +344,8 @@ export default function Home() {
             <h2 id="submissions-title">LabelRadar submissions</h2>
             <p>
               Send unreleased Afro House, Afro-Tech and 3-Step demos through the
-              Lukulu Recordings LabelRadar portal. The portal opens in a focused
-              dark container so artists stay inside the label experience.
+              Lukulu Recordings LabelRadar portal. Send unreleased work through the label portal. Keep the file focused,
+              leave room for the groove, and tell us where the record belongs.
             </p>
             <div className="story-links">
               <a href={labelRadarUrl} target="_blank" rel="noreferrer">
