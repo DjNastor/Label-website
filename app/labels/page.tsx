@@ -4,40 +4,44 @@ import { sceneLabels } from "../labels-data";
 
 export const metadata: Metadata = {
   title: "Afro House Labels | Lukulu Recordings",
-  description: "Discover the labels, artists and sounds shaping Afro House worldwide.",
+  description: "A curated guide to Afro House labels, artists and platforms shaping the sound worldwide.",
   alternates: { canonical: "/labels" },
 };
 
 function Arrow() { return <span aria-hidden="true">↗</span>; }
 
 export default function LabelsPage() {
-  const featured = sceneLabels.slice(0, 3);
-  const sounds = sceneLabels.slice(3, 7);
-  return <main className="labels-simple">
-    <nav className="simple-nav" aria-label="Label guide navigation">
-      <Link href="/" className="simple-logo">LUKULU <span>RECORDINGS</span></Link>
-      <div><a href="#about">About</a><a href="#sounds">Sounds</a><a href="#submit">Submit</a></div>
-      <Link className="simple-nav-cta" href="/">Visit Lukulu <Arrow /></Link>
-    </nav>
-
-    <header className="simple-hero" id="about">
-      <p className="simple-kicker">A guide by Lukulu Recordings</p>
-      <h1>Afro House<br /><em>together.</em></h1>
-      <p className="simple-intro">A small selection of labels and artists carrying African electronic music from home to everywhere.</p>
-      <a className="simple-scroll" href="#sounds">Explore the sounds <span aria-hidden="true">↓</span></a>
+  const featured = sceneLabels.filter((label) => label.featured);
+  const others = sceneLabels.filter((label) => !label.featured);
+  return <main className="labels-page">
+    <header className="labels-header">
+      <Link className="labels-back" href="/">← Lukulu Recordings</Link>
+      <p className="eyebrow"><span /> Scene guide</p>
+      <h1>Labels shaping<br /><em>Afro House.</em></h1>
+      <p className="labels-lede">A starting point for discovering the imprints, artists and communities moving African electronic music forward.</p>
+      <div className="labels-stats" aria-label="Directory summary"><span><strong>{sceneLabels.length}</strong> labels</span><span><strong>{new Set(sceneLabels.map((label) => label.region.split(" /")[0])).size}</strong> regions</span><span><strong>{new Set(sceneLabels.flatMap((label) => label.artists)).size}</strong> artists</span></div>
     </header>
-
-    <section className="simple-featured" aria-labelledby="featured-title">
-      <div className="simple-heading"><p className="simple-kicker">01 / Selected labels</p><h2 id="featured-title">The movement<br /><em>in motion.</em></h2></div>
-      <div className="simple-featured-list">{featured.map((label, index) => <a className="simple-label-row" href={label.website || label.platform || "#sounds"} target="_blank" rel="noreferrer" key={label.name}><span>0{index + 1}</span><strong>{label.name}</strong><small>{label.region}</small><b aria-hidden="true">↗</b></a>)}</div>
+    <section className="labels-featured" aria-labelledby="featured-title">
+      <div className="labels-section-heading"><p className="mini-label">01 / FOUNDATIONS</p><h2 id="featured-title">Start with the essentials.</h2></div>
+      <div className="label-grid label-grid-featured">{featured.map((label) => <LabelCard key={label.name} label={label} featured />)}</div>
     </section>
-
-    <section className="simple-sounds" id="sounds" aria-labelledby="sounds-title">
-      <div className="simple-heading"><p className="simple-kicker">02 / Sounds of the scene</p><h2 id="sounds-title">Follow the<br /><em>frequency.</em></h2></div>
-      <div className="simple-sound-grid">{sounds.map((label) => <article className="simple-sound" key={label.name}><p>{label.region}</p><h3>{label.name}</h3><div>{label.artists.map((artist) => <span key={artist}>{artist}</span>)}</div><a href={label.website || label.platform || "#"} target="_blank" rel="noreferrer">Discover <Arrow /></a></article>)}</div>
+    <section className="labels-directory" aria-labelledby="directory-title">
+      <div className="labels-section-heading"><p className="mini-label">02 / DIRECTORY</p><h2 id="directory-title">Follow the sound.</h2><p>Explore labels by place, philosophy and the artists in their orbit.</p></div>
+      <div className="label-grid">{others.map((label) => <LabelCard key={label.name} label={label} />)}</div>
     </section>
-
-    <section className="simple-submit" id="submit" aria-labelledby="submit-title"><div><p className="simple-kicker">03 / For artists</p><h2 id="submit-title">Bring your<br /><em>sound.</em></h2><p>Make the record undeniable. For demos to Lukulu, use the LabelRadar portal.</p></div><a className="button button-primary" href="https://www.labelradar.com/labels/LukuluRecordings/portal" target="_blank" rel="noreferrer">Submit a demo <Arrow /></a></section>
-    <footer className="simple-footer"><Link href="/">LUKULU RECORDINGS</Link><span>South Africa · Afro House · Music without borders</span></footer>
+    <section className="labels-submit" aria-labelledby="submit-title">
+      <div><p className="eyebrow eyebrow-light"><span /> For artists</p><h2 id="submit-title">Ready to send your sound?</h2><p>Study the catalogue, make the record undeniable, and follow each label’s own submission route. For demos to Lukulu, use our LabelRadar portal.</p></div>
+      <a className="button button-primary" href="https://www.labelradar.com/labels/LukuluRecordings/portal" target="_blank" rel="noopener noreferrer">Submit to Lukulu <Arrow /></a>
+    </section>
+    <footer className="labels-footer"><Link href="/">LUKULU RECORDINGS</Link><span>Editorial guide · Links open on external platforms</span></footer>
   </main>;
+}
+
+function LabelCard({ label, featured = false }: { label: (typeof sceneLabels)[number]; featured?: boolean }) {
+  return <article className={`label-card${featured ? " label-card-featured" : ""}`}>
+    <div className="label-card-top"><span className="label-index">{String(sceneLabels.indexOf(label) + 1).padStart(2, "0")}</span><span className="label-region">{label.region}</span></div>
+    <h3>{label.name}</h3><p>{label.description}</p>
+    <div className="label-artists">{label.artists.map((artist) => <span key={artist}>{artist}</span>)}</div>
+    <div className="label-links">{label.website && <a href={label.website} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${label.name} website`}>Website <Arrow /></a>}{label.platform && <a href={label.platform} target="_blank" rel="noopener noreferrer" aria-label={`Listen to ${label.name}`}>Listen <Arrow /></a>}</div>
+  </article>;
 }
