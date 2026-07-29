@@ -4155,3 +4155,9 @@ footer { background:var(--ink); color:var(--bone); }
 .labels-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 2rem 0 8rem; font: .7rem var(--mono); text-transform: uppercase; }
 .labels-footer a { color: inherit; font-weight: 700; text-decoration: none; }
 @media (max-width: 760px) { .labels-header { padding-bottom: 4rem; } .labels-back { margin-bottom: 4rem; } .labels-lede { margin-left: 0; } .labels-section-heading, .label-grid, .label-grid-featured { grid-template-columns: 1fr; } .labels-section-heading { gap: .75rem; } .label-card { min-height: 18rem; } .labels-submit { display: block; } .labels-submit .button { display: inline-block; margin-top: 2rem; } .labels-footer { display: block; } .labels-footer span { display: block; margin-top: .75rem; } }
+
+.labels-stats { display: flex; flex-wrap: wrap; gap: .75rem; margin: 3rem 0 0 max(0rem, 24vw); }
+.labels-stats span { padding: .65rem .8rem; border: 1px solid var(--line-dark); font: .7rem var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.labels-stats strong { color: var(--copper); font-size: 1rem; }
+.label-card-featured { min-height: 22rem; }
+@media (max-width: 760px) { .labels-stats { margin-left: 0; } }
