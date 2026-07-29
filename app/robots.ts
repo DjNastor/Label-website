@@ -1,0 +1,1 @@
+import type { MetadataRoute } from "next";\n\nexport default function robots(): MetadataRoute.Robots {\n  return { rules: [{ userAgent: "*", allow: "/" }], sitemap: "https://lukulurecordings.com/sitemap.xml" };\n}\n
