@@ -4161,3 +4161,86 @@ footer { background:var(--ink); color:var(--bone); }
 .labels-stats strong { color: var(--copper); font-size: 1rem; }
 .label-card-featured { min-height: 22rem; }
 @media (max-width: 760px) { .labels-stats { margin-left: 0; } }
+
+/* Responsive stability pass: keep the label experience usable across narrow screens. */
+html, body { max-width: 100%; overflow-x: clip; }
+img, video, iframe { max-width: 100%; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.hero-copy, .hero-art, .section-heading, .release-layout, .story, .artists,
+.submission-portal, .spotlight, .contact { min-width: 0; }
+.release-list, .release-row, .release-info, .release-meta { min-width: 0; }
+.release-info strong, .release-info small, .release-meta { overflow-wrap: anywhere; }
+
+@media (max-width: 1040px) {
+  .site-header { padding-inline: var(--page-gutter); }
+  .desktop-nav, .site-header .header-cta { display: none; }
+  .mobile-menu { display: block; }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 3rem; padding-top: 4rem; }
+  .hero-copy { max-width: 46rem; }
+  .hero-art { justify-self: center; width: min(78vw, 34rem); }
+  .sticky-rail { display: none; }
+  .section-heading { grid-template-columns: 1fr; gap: .75rem; }
+  .section-heading h2 { max-width: none; }
+  .release-layout { grid-template-columns: 1fr; }
+  .coming-next { min-height: 18rem; }
+  .story, .submission-portal, .spotlight { grid-template-columns: 1fr; }
+  .story-art, .spotlight-image { min-height: 24rem; }
+}
+
+@media (max-width: 760px) {
+  :root { --page-gutter: 1rem; --section-space: 4.5rem; }
+  body { padding-bottom: 6.5rem; }
+  .site-header { position: sticky; top: 0; z-index: 100; min-height: 4.5rem; padding-block: .75rem; background: rgba(18, 13, 10, .96); }
+  .brand img { width: 2.5rem; height: 2.5rem; }
+  .brand strong { font-size: 1rem; }
+  .brand small { font-size: .5rem; }
+  .hero { padding-block: 3rem 4rem; }
+  .hero h1 { max-width: 10ch; font-size: clamp(3.2rem, 16vw, 5.5rem); }
+  .hero-intro { max-width: 31rem; font-size: .98rem; }
+  .hero-actions { align-items: stretch; flex-direction: column; }
+  .hero-actions .button { width: 100%; justify-content: center; }
+  .hero-art { width: min(88vw, 25rem); }
+  .sound-tags { flex-wrap: wrap; gap: .45rem; }
+  .sound-tags span { font-size: .58rem; }
+  .section, .story, .artists, .submission-portal, .spotlight, .contact { padding-block: 4rem; }
+  .release-row { grid-template-columns: 1.5rem minmax(4.2rem, .7fr) minmax(0, 1fr) 2.5rem; gap: .55rem; min-height: 6.5rem; padding: .8rem .5rem; }
+  .release-info strong { font-size: clamp(1.2rem, 6.2vw, 2rem); line-height: .95; }
+  .release-info small { display: block; max-width: 100%; font-size: .68rem; }
+  .release-date { font-size: .55rem; }
+  .release-code { display: none; }
+  .release-row .play { width: 2.35rem; height: 2.35rem; }
+  .coming-next { min-height: 15rem; padding: 1.25rem; }
+  .story-copy, .spotlight-copy, .submission-copy { padding-inline: 0; }
+  .story-copy h2, .spotlight-copy h2, .contact h2 { font-size: clamp(2.6rem, 12vw, 4.6rem); }
+  .portal-frame iframe { min-height: 30rem; }
+  .contact { display: block; }
+  .contact > img { width: 8rem; height: 8rem; margin-bottom: 1.5rem; }
+  .contact-button { display: inline-flex; max-width: 100%; overflow-wrap: anywhere; }
+  footer { display: block; padding-inline: var(--page-gutter); }
+  .footer-links { flex-wrap: wrap; gap: .65rem 1rem; margin-block: 1rem; }
+
+  .labels-header, .labels-featured, .labels-directory, .labels-submit, .labels-footer { width: min(100% - 2rem, var(--content-max)); }
+  .labels-header { padding: 1.25rem 0 4rem; }
+  .labels-back { margin-bottom: 3rem; }
+  .labels-header h1 { font-size: clamp(3.5rem, 16vw, 6rem); }
+  .labels-lede, .labels-stats { margin-left: 0; }
+  .labels-stats { gap: .45rem; margin-top: 2rem; }
+  .labels-stats span { font-size: .58rem; }
+  .labels-featured, .labels-directory { padding-block: 3rem; }
+  .labels-section-heading { display: block; margin-bottom: 1.5rem; }
+  .labels-section-heading h2 { margin: .5rem 0 1rem; font-size: clamp(2.2rem, 11vw, 4rem); }
+  .label-grid, .label-grid-featured { grid-template-columns: 1fr; }
+  .label-card, .label-card-featured { min-height: 0; padding: 1.25rem; }
+  .label-card h3 { margin-top: 2.25rem; font-size: clamp(1.5rem, 8vw, 2.3rem); }
+  .labels-submit { margin-top: 2rem; padding: 1.5rem; }
+  .labels-submit h2 { font-size: clamp(2.5rem, 12vw, 4.8rem); }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 3rem; }
+  .release-row { grid-template-columns: 1.35rem minmax(3.8rem, .7fr) minmax(0, 1fr) 2.2rem; gap: .4rem; }
+  .release-info strong { font-size: 1.15rem; }
+  .release-date { font-size: .5rem; }
+  .labels-header h1 { font-size: 3.25rem; }
+}
