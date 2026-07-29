@@ -2,10 +2,55 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lukulu Recordings | Afro House & Afro-Tech",
+  metadataBase: new URL("https://lukulurecordings.com"),
+  title: {
+    default: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step",
+    template: "%s | Lukulu Recordings",
+  },
   description:
     "Lukulu Recordings is a South African independent label releasing Afro House, Afro-Tech and 3-Step music from Ladysmith to the world.",
   applicationName: "Lukulu Recordings",
+  keywords: [
+    "Lukulu Recordings",
+    "Afro House label",
+    "Afro-Tech",
+    "3-Step",
+    "South African house music",
+    "Ladysmith music",
+    "DJ Nastor",
+  ],
+  authors: [{ name: "Lukulu Recordings" }],
+  creator: "Lukulu Recordings",
+  publisher: "Lukulu Recordings",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step",
+    description:
+      "Independent Afro House, Afro-Tech and 3-Step from Ladysmith, South Africa — built for global dance floors.",
+    url: "/",
+    siteName: "Lukulu Recordings",
+    images: [
+      {
+        url: "/assets/lukulu-textile-wordmark.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Lukulu Recordings textile wordmark",
+      },
+    ],
+    locale: "en_ZA",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step",
+    description:
+      "Independent Afro House, Afro-Tech and 3-Step from Ladysmith, South Africa.",
+    images: ["/assets/lukulu-textile-wordmark.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: {
       url: "/assets/lukulu-favicon.jpg",

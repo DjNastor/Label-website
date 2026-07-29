@@ -23,6 +23,27 @@ const artists = [
   "Crash Zulu",
 ];
 
+const proofPoints = [
+  { value: "2012", label: "Founded in Ladysmith" },
+  { value: "8+", label: "Artists and collaborators" },
+  { value: "3", label: "Core sounds: Afro House, Afro-Tech, 3-Step" },
+];
+
+const labelValues = [
+  {
+    title: "Heritage first",
+    text: "African percussion, melodic storytelling and a strong sense of place guide every release.",
+  },
+  {
+    title: "Club ready",
+    text: "Records are shaped for selectors: clean low-end, patient arrangements and hooks that travel.",
+  },
+  {
+    title: "Artist care",
+    text: "We look for long-term voices, not one-off uploads — context, identity and release vision matter.",
+  },
+];
+
 function ExternalArrow() {
   return <span aria-hidden="true">↗</span>;
 }
@@ -83,8 +104,9 @@ export default function Home() {
             </h1>
 
             <p className="hero-intro">
-              Independent Afro House and Afro-Tech from Ladysmith —
-              shaped by African soul, modern electronic energy and dance-floor purpose.
+              Independent Afro House, Afro-Tech and 3-Step from Ladysmith —
+              shaped by African soul, modern electronic energy and dance-floor purpose
+              for DJs, listeners and global dance floors.
             </p>
 
             <div className="hero-actions">
@@ -106,6 +128,15 @@ export default function Home() {
               <span>AFRO-TECH</span>
               <span>3-STEP</span>
             </div>
+
+            <dl className="hero-proof" aria-label="Lukulu Recordings highlights">
+              {proofPoints.map((point) => (
+                <div key={point.label}>
+                  <dt>{point.value}</dt>
+                  <dd>{point.label}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           <figure className="hero-art">
@@ -179,8 +210,9 @@ export default function Home() {
             </p>
             <h2>Latest releases</h2>
             <p>
-              A working release desk for new cuts, catalog staples and the next
-              movement in the Lukulu story.
+              A sharper release desk for new cuts, catalog staples and the next
+              movement in the Lukulu story — built for discovery, listening and
+              demo research.
             </p>
             <a href={catalogUrl} target="_blank" rel="noreferrer">
               View the full catalog <ExternalArrow />
@@ -300,6 +332,29 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section label-system" aria-labelledby="system-title">
+          <div className="section-heading section-heading-compact">
+            <p className="eyebrow">
+              <span /> Label standard
+            </p>
+            <h2 id="system-title">What we listen for</h2>
+            <p>
+              A clear creative filter helps artists understand the label and gives
+              visitors a stronger reason to explore the catalog.
+            </p>
+          </div>
+
+          <div className="value-grid">
+            {labelValues.map((value, index) => (
+              <article key={value.title} className="value-card">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{value.title}</h3>
+                <p>{value.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="section artists" id="artists">
           <div className="artist-intro">
             <p className="eyebrow">
@@ -312,7 +367,7 @@ export default function Home() {
             </h2>
             <p>
               Producers, vocalists and collaborators shaping the Lukulu
-              catalog.
+              catalog — a family of rooted, forward-moving electronic music.
             </p>
           </div>
 
@@ -346,7 +401,8 @@ export default function Home() {
             <p>
               Send unreleased Afro House, Afro-Tech and 3-Step demos through the
               Lukulu Recordings LabelRadar portal. Keep the file focused, leave
-              room for the groove, and tell us where the record belongs.
+              room for the groove, and include the story, credits and release
+              vision so the team can review quickly.
             </p>
             <div className="demo-brief" aria-label="Demo submission checklist">
               <span className="demo-brief-kicker">Before you send</span>
@@ -440,8 +496,8 @@ export default function Home() {
             </p>
             <h2>Send us your sound.</h2>
             <p>
-              Demo submissions, licensing enquiries, collaborations and label
-              business.
+              Demo submissions, licensing enquiries, collaborations, press and
+              label business — reach the team directly or use LabelRadar for demos.
             </p>
           </div>
           <a
