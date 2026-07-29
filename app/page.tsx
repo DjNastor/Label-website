@@ -345,9 +345,26 @@ export default function Home() {
             <h2 id="submissions-title">LabelRadar submissions</h2>
             <p>
               Send unreleased Afro House, Afro-Tech and 3-Step demos through the
-              Lukulu Recordings LabelRadar portal. Send unreleased work through the label portal. Keep the file focused,
-              leave room for the groove, and tell us where the record belongs.
+              Lukulu Recordings LabelRadar portal. Keep the file focused, leave
+              room for the groove, and tell us where the record belongs.
             </p>
+            <div className="demo-brief" aria-label="Demo submission checklist">
+              <span className="demo-brief-kicker">Before you send</span>
+              <ul>
+                <li>
+                  <strong>Unreleased music only</strong>
+                  <span>No public links, bootlegs or uncleared samples.</span>
+                </li>
+                <li>
+                  <strong>Label-fit first</strong>
+                  <span>Afro House, Afro-Tech and 3-Step with a clear floor pulse.</span>
+                </li>
+                <li>
+                  <strong>Context helps</strong>
+                  <span>Tell us the story, collaborators and release vision.</span>
+                </li>
+              </ul>
+            </div>
             <div className="story-links">
               <a href={labelRadarUrl} target="_blank" rel="noreferrer">
                 Open LabelRadar <ExternalArrow />

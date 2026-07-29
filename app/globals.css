@@ -3061,6 +3061,85 @@ section[id] {
   margin-top: clamp(2rem, 3.5vw, 3rem);
 }
 
+.demo-brief {
+  position: relative;
+  margin-top: clamp(2rem, 3vw, 2.8rem);
+  padding: clamp(1.1rem, 2vw, 1.45rem);
+  border: 1px solid rgba(244, 238, 228, 0.2);
+  background:
+    linear-gradient(135deg, rgba(244, 238, 228, 0.08), rgba(191, 113, 71, 0.09)),
+    rgba(8, 5, 4, 0.34);
+  box-shadow: 0.58rem 0.58rem 0 rgba(191, 113, 71, 0.13);
+}
+
+.demo-brief::before {
+  position: absolute;
+  top: -0.55rem;
+  right: 1.15rem;
+  width: 4.2rem;
+  height: 0.2rem;
+  background: var(--copper);
+  box-shadow: 0 0.52rem 0 rgba(191, 113, 71, 0.42);
+  content: "";
+}
+
+.demo-brief-kicker {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--clay);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.demo-brief ul {
+  display: grid;
+  gap: 0.85rem;
+  list-style: none;
+}
+
+.demo-brief li {
+  display: grid;
+  grid-template-columns: 0.72rem minmax(0, 1fr);
+  gap: 0.25rem 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(244, 238, 228, 0.13);
+}
+
+.demo-brief li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.demo-brief li::before {
+  grid-row: 1 / span 2;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.42rem;
+  border: 1px solid var(--copper);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.demo-brief strong {
+  color: var(--bone);
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 1.7vw, 1.7rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.demo-brief li span {
+  color: rgba(244, 238, 228, 0.66);
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
 .portal-frame {
   position: relative;
   min-height: clamp(32rem, 48vw, 44rem);
