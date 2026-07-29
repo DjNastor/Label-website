@@ -185,6 +185,7 @@ export default function Home() {
             <a href={catalogUrl} target="_blank" rel="noreferrer">
               View the full catalog <ExternalArrow />
             </a>
+            <a href="/labels">Explore Afro House labels <ExternalArrow /></a>
           </div>
 
           <div className="release-layout">
