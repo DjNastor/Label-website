@@ -106,6 +106,21 @@ export default function Home() {
               <span>AFRO-TECH</span>
               <span>3-STEP</span>
             </div>
+
+            <dl className="label-dossier" aria-label="Lukulu label notes">
+              <div>
+                <dt>Base</dt>
+                <dd>Ladysmith, ZA</dd>
+              </div>
+              <div>
+                <dt>Catalog</dt>
+                <dd>Afro House / Afro-Tech</dd>
+              </div>
+              <div>
+                <dt>Send</dt>
+                <dd>Unreleased demos only</dd>
+              </div>
+            </dl>
           </div>
 
           <figure className="hero-art">
@@ -182,10 +197,12 @@ export default function Home() {
               A working release desk for new cuts, catalog staples and the next
               movement in the Lukulu story.
             </p>
-            <a href={catalogUrl} target="_blank" rel="noreferrer">
-              View the full catalog <ExternalArrow />
-            </a>
-            <a href="/labels">Explore Afro House labels <ExternalArrow /></a>
+            <div className="section-links" aria-label="Release links">
+              <a href={catalogUrl} target="_blank" rel="noreferrer">
+                View the full catalog <ExternalArrow />
+              </a>
+              <a href="/labels">Explore Afro House labels <ExternalArrow /></a>
+            </div>
           </div>
 
           <div className="release-layout">

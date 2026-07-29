@@ -234,7 +234,8 @@ section[id] {
   transition: color 220ms ease, border-color 220ms ease;
 }
 
-.section-heading > a span {
+.section-heading > a span,
+.section-links a span {
   color: var(--copper);
   font-size: 1rem;
   transition: transform 260ms var(--ease);
@@ -596,6 +597,50 @@ section[id] {
   border: 1px solid var(--copper);
   content: "";
   transform: rotate(45deg);
+}
+
+.label-dossier {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 46rem;
+  margin: clamp(1.55rem, 3.2vh, 2.65rem) 0 0;
+  border: 1px solid rgba(244, 238, 228, 0.22);
+  background:
+    linear-gradient(135deg, rgba(244, 238, 228, 0.075), rgba(244, 238, 228, 0.018)),
+    rgba(18, 13, 10, 0.28);
+  box-shadow: inset 0 1px 0 rgba(244, 238, 228, 0.08);
+}
+
+.label-dossier div {
+  min-width: 0;
+  padding: 0.95rem clamp(0.8rem, 1.6vw, 1.15rem) 1rem;
+}
+
+.label-dossier div:not(:last-child) {
+  border-right: 1px solid rgba(244, 238, 228, 0.16);
+}
+
+.label-dossier dt {
+  margin-bottom: 0.42rem;
+  color: rgba(244, 238, 228, 0.48);
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.label-dossier dd {
+  margin: 0;
+  overflow: hidden;
+  color: var(--sand);
+  font-family: var(--serif);
+  font-size: clamp(0.82rem, 1vw, 0.98rem);
+  font-style: italic;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hero-art {
@@ -1172,6 +1217,25 @@ section[id] {
   }
 }
 
+@media (max-width: 56rem) {
+  .label-dossier {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .label-dossier div:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid rgba(244, 238, 228, 0.16);
+  }
+
+  .section-links {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+
 @media (max-width: 42rem) {
   :root {
     --page-gutter: clamp(1.1rem, 5vw, 1.6rem);
@@ -1493,10 +1557,15 @@ section[id] {
   text-wrap: balance;
 }
 
-.section-heading > a {
+.section-heading > a,
+.section-links {
   position: relative;
   grid-column: 2;
   grid-row: 1 / span 2;
+}
+
+.section-heading > a,
+.section-links a {
   display: inline-flex;
   align-items: center;
   align-self: end;
@@ -1521,14 +1590,30 @@ section[id] {
 }
 
 .section-heading > a:hover,
-.section-heading > a:focus-visible {
+.section-heading > a:focus-visible,
+.section-links a:hover,
+.section-links a:focus-visible {
   border-color: var(--copper);
   color: var(--wood);
 }
 
 .section-heading > a:hover span,
-.section-heading > a:focus-visible span {
+.section-heading > a:focus-visible span,
+.section-links a:hover span,
+.section-links a:focus-visible span {
   transform: translate(0.22rem, -0.22rem);
+}
+
+.section-links {
+  display: grid;
+  justify-self: end;
+  align-self: end;
+  gap: 0.78rem;
+  min-width: min(100%, 17rem);
+}
+
+.section-links a {
+  width: 100%;
 }
 
 .section-heading-compact {
@@ -1750,6 +1835,15 @@ section[id] {
 .release-row[aria-pressed="true"]::before,
 .release-row[aria-pressed="true"]::after {
   transform: translateX(0) scaleY(1);
+}
+
+.release-row[aria-pressed="true"] .release-info strong::after {
+  color: var(--red);
+  content: "  / PLAYING";
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  vertical-align: middle;
 }
 
 .release-row[aria-pressed="true"] .play,
