@@ -31,6 +31,7 @@ type AudioPreviewContextValue = {
   togglePlayback: () => void;
   skipTrack: (direction: 1 | -1) => void;
   seekToRatio: (ratio: number) => void;
+  dismissPlayer: () => void;
 };
 
 const AudioPreviewContext = createContext<AudioPreviewContextValue | null>(null);
@@ -57,7 +58,6 @@ export function AudioPreviewProvider({ children }: { children: ReactNode }) {
       return [...merged.values()];
     });
 
-    setCurrentTrackId((activeId) => activeId ?? nextTracks[0].id);
   }, []);
 
   const selectTrack = useCallback(
@@ -92,6 +92,8 @@ export function AudioPreviewProvider({ children }: { children: ReactNode }) {
     },
     [currentTrackId, isPlaying, tracks],
   );
+
+  const dismissPlayer = useCallback(() => { setIsPlaying(false); setProgress(0); setCurrentTrackId(null); }, []);
 
   const seekToRatio = useCallback(
     (ratio: number) => {
@@ -173,6 +175,7 @@ export function AudioPreviewProvider({ children }: { children: ReactNode }) {
       togglePlayback,
       skipTrack,
       seekToRatio,
+      dismissPlayer,
     }),
     [
       currentTrack,
@@ -184,6 +187,7 @@ export function AudioPreviewProvider({ children }: { children: ReactNode }) {
       togglePlayback,
       skipTrack,
       seekToRatio,
+      dismissPlayer,
     ],
   );
 
@@ -206,108 +210,20 @@ export function useAudioPreview() {
 }
 
 export function PreviewPlayer() {
-  const {
-    currentTrack,
-    hasPreview,
-    isPlaying,
-    progress,
-    togglePlayback,
-    skipTrack,
-    seekToRatio,
-  } = useAudioPreview();
-  const bars = useMemo(
-    () => makeWaveformBars(currentTrack?.id ?? "lukulu-preview"),
-    [currentTrack?.id],
-  );
-
-  function handleWaveformClick(event: MouseEvent<HTMLButtonElement>) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    seekToRatio((event.clientX - rect.left) / rect.width);
-  }
-
-  return (
-    <aside className="audio-preview-player" aria-label="Audio preview player">
-      <div className="audio-preview-meta">
-        <span className="audio-preview-label">
-          {currentTrack?.sourceLabel ?? "Preview player"}
-        </span>
-        <strong>{currentTrack?.title ?? "Select a catalog track"}</strong>
-        <p>
-          {currentTrack
-            ? currentTrack.artist
-            : "Track previews will appear here when available."}
-        </p>
-      </div>
-
-      <div className="audio-preview-controls">
-        <button
-          className="audio-control"
-          type="button"
-          onClick={() => skipTrack(-1)}
-          disabled={!currentTrack}
-          aria-label="Previous track"
-        >
-          Prev
-        </button>
-        <button
-          className="audio-control audio-control-main"
-          type="button"
-          onClick={togglePlayback}
-          disabled={!hasPreview}
-          aria-label={isPlaying ? "Pause preview" : "Play preview"}
-        >
-          {isPlaying ? "Pause" : "Play"}
-        </button>
-        <button
-          className="audio-control"
-          type="button"
-          onClick={() => skipTrack(1)}
-          disabled={!currentTrack}
-          aria-label="Next track"
-        >
-          Next
-        </button>
-      </div>
-
-      <button
-        className="audio-preview-waveform"
-        type="button"
-        onClick={handleWaveformClick}
-        disabled={!hasPreview}
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(progress * 100)}
-        aria-label={
-          hasPreview
-            ? "Seek through the current preview"
-            : "Preview audio unavailable"
-        }
-      >
-        {bars.map((height, index) => (
-          <span
-            className={index / (bars.length - 1) <= progress ? "is-lit" : ""}
-            key={index}
-            style={{ "--bar-height": height + "%" } as CSSProperties}
-          />
-        ))}
-      </button>
-
-      <div className="audio-preview-links">
-        <span>{hasPreview ? "Preview ready" : "Preview unavailable"}</span>
-        {currentTrack?.purchaseUrl ? (
-          <a href={currentTrack.purchaseUrl} target="_blank" rel="noreferrer">
-            Buy full
-          </a>
-        ) : null}
-        {currentTrack?.streamUrl ? (
-          <a href={currentTrack.streamUrl} target="_blank" rel="noreferrer">
-            Stream
-          </a>
-        ) : null}
-      </div>
-    </aside>
-  );
+  const { currentTrack, hasPreview, isPlaying, progress, togglePlayback, skipTrack, seekToRatio, dismissPlayer } = useAudioPreview();
+  const [isExpanded, setIsExpanded] = useState(true);
+  const bars = useMemo(() => makeWaveformBars(currentTrack?.id ?? "lukulu-preview"), [currentTrack?.id]);
+  useEffect(() => { if (!currentTrack) return; setIsExpanded(true); const timer = window.setTimeout(() => setIsExpanded(false), 6500); return () => window.clearTimeout(timer); }, [currentTrack?.id]);
+  function handleWaveformClick(event: MouseEvent<HTMLButtonElement>) { const rect = event.currentTarget.getBoundingClientRect(); seekToRatio((event.clientX - rect.left) / rect.width); }
+  if (!currentTrack) return null;
+  return <aside className={"audio-preview-player " + (isExpanded ? "is-expanded" : "is-compact")} aria-label="Audio preview player" data-playing={isPlaying ? "true" : "false"}>
+    <button className="audio-player-toggle" type="button" onClick={() => setIsExpanded(v => !v)} aria-expanded={isExpanded} aria-label={isExpanded ? "Minimize audio player" : "Expand audio player"}>{isExpanded ? "Minimize" : "Now playing"}</button>
+    <button className="audio-player-close" type="button" onClick={dismissPlayer} aria-label="Close audio player"><span aria-hidden="true">×</span></button>
+    <div className="audio-preview-meta"><span className="audio-preview-label">{currentTrack.sourceLabel ?? "Preview player"}</span><strong>{currentTrack.title}</strong><p>{currentTrack.artist}</p></div>
+    <div className="audio-preview-controls"><button className="audio-control audio-control-skip" type="button" onClick={() => skipTrack(-1)} aria-label="Previous track">←</button><button className="audio-control audio-control-main" type="button" onClick={togglePlayback} disabled={!hasPreview} aria-label={isPlaying ? "Pause preview" : "Play preview"}><span className="audio-control-icon" aria-hidden="true">{isPlaying ? "Ⅱ" : "▶"}</span><span className="audio-control-text">{isPlaying ? "Pause" : "Play"}</span></button><button className="audio-control audio-control-skip" type="button" onClick={() => skipTrack(1)} aria-label="Next track">→</button></div>
+    <button className="audio-preview-waveform" type="button" onClick={handleWaveformClick} disabled={!hasPreview} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress*100)} aria-label={hasPreview ? "Seek through the current preview" : "Preview audio unavailable"}>{bars.map((height,index)=><span className={index/(bars.length-1)<=progress?"is-lit":""} key={index} style={{"--bar-height":height+"%"} as CSSProperties}/>)}</button>
+    <div className="audio-preview-links"><span>{hasPreview?"Preview ready":"Preview unavailable"}</span>{currentTrack.purchaseUrl?<a href={currentTrack.purchaseUrl} target="_blank" rel="noreferrer">Buy full</a>:null}{currentTrack.streamUrl?<a href={currentTrack.streamUrl} target="_blank" rel="noreferrer">Stream</a>:null}</div>
+  </aside>;
 }
 
 export function SelectedSoundsGrid({

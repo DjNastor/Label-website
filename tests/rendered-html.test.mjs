@@ -128,10 +128,8 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /A zulu man/);
   assert.match(html, /Follow the sign/);
   assert.match(html, /Beatport Greenroom catalog snapshot added/);
-  assert.match(html, /aria-label="Audio preview player"/);
-  assert.match(html, /Select a catalog track/);
-  assert.match(html, /Preview unavailable/);
   assert.match(html, /Preview Reach Deep by DJ Nastor/);
+  assert.doesNotMatch(html, /aria-label="Audio preview player"/);
   assert.match(html, /↗/);
   assert.doesNotMatch(html, /&amp;nearr;|&nearr;/);
   assert.doesNotMatch(html, /SkeletonPreview|react-loading-skeleton|Codex is working/);
