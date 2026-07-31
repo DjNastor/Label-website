@@ -52,35 +52,6 @@ const labelValues = [
   },
 ];
 
-const proofPoints = [
-  { value: "2012", label: "Founded in Ladysmith" },
-  { value: "8+", label: "Artists and collaborators" },
-  { value: "3", label: "Core sounds: Afro House, Afro-Tech, 3-Step" },
-];
-
-const labelValues = [
-  {
-    kicker: "PERCUSSION",
-    title: "Rhythm comes first",
-    text: "Drums, shakers and movement rooted in African musical language sit at the center of the Lukulu sound.",
-  },
-  {
-    kicker: "VOICE",
-    title: "Story carries the record",
-    text: "Melodies and vocals should bring spirit, emotion and memory — not just a hook over a groove.",
-  },
-  {
-    kicker: "LOW-END",
-    title: "Built for the floor",
-    text: "The groove needs weight, patience and space so DJs can trust the record in the room.",
-  },
-  {
-    kicker: "PLACE",
-    title: "Identity matters",
-    text: "Every release should feel connected to culture, origin and a clear artistic point of view.",
-  },
-];
-
 function ExternalArrow() {
   return <span aria-hidden="true">↗</span>;
 }
