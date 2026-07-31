@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://lukulurecordings.com"),
   title: {
-    default: "Lukulu Recordings — Afro House from Ladysmith to the World Label from South Africa",
+    default: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step Label from South Africa",
     template: "%s | Lukulu Recordings",
   },
   description:
