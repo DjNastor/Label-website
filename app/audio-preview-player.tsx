@@ -47,7 +47,7 @@ export function AudioPreviewProvider({ children }: { children: ReactNode }) {
     () => tracks.find((track) => track.id === currentTrackId) ?? null,
     [currentTrackId, tracks],
   );
-  const hasPreview = Boolean(currentTrack?.previewUrl);
+  const hasPreview = Boolean(currentTrack?.previewUrl || currentTrack?.spotifyEmbedUrl);
 
   const registerTracks = useCallback((nextTracks: AudioPreviewTrack[]) => {
     if (nextTracks.length === 0) return;
@@ -219,10 +219,12 @@ export function PreviewPlayer() {
   return <aside className={"audio-preview-player " + (isExpanded ? "is-expanded" : "is-compact")} aria-label="Audio preview player" data-playing={isPlaying ? "true" : "false"}>
     <button className="audio-player-toggle" type="button" onClick={() => setIsExpanded(v => !v)} aria-expanded={isExpanded} aria-label={isExpanded ? "Minimize audio player" : "Expand audio player"}>{isExpanded ? "Minimize" : "Now playing"}</button>
     <button className="audio-player-close" type="button" onClick={dismissPlayer} aria-label="Close audio player"><span aria-hidden="true">×</span></button>
+    {currentTrack.artworkUrl ? <img className="audio-preview-artwork" src={currentTrack.artworkUrl} alt="" width="72" height="72" /> : null}
     <div className="audio-preview-meta"><span className="audio-preview-label">{currentTrack.sourceLabel ?? "Preview player"}</span><strong>{currentTrack.title}</strong><p>{currentTrack.artist}</p></div>
-    <div className="audio-preview-controls"><button className="audio-control audio-control-skip" type="button" onClick={() => skipTrack(-1)} aria-label="Previous track">←</button><button className="audio-control audio-control-main" type="button" onClick={togglePlayback} disabled={!hasPreview} aria-label={isPlaying ? "Pause preview" : "Play preview"}><span className="audio-control-icon" aria-hidden="true">{isPlaying ? "Ⅱ" : "▶"}</span><span className="audio-control-text">{isPlaying ? "Pause" : "Play"}</span></button><button className="audio-control audio-control-skip" type="button" onClick={() => skipTrack(1)} aria-label="Next track">→</button></div>
+    <div className="audio-preview-controls"><button className="audio-control audio-control-skip" type="button" onClick={() => skipTrack(-1)} aria-label="Previous track">←</button><button className="audio-control audio-control-main" type="button" onClick={currentTrack.previewUrl ? togglePlayback : () => setIsExpanded(true)} disabled={!hasPreview} aria-label={isPlaying ? "Pause preview" : "Play preview"}><span className="audio-control-icon" aria-hidden="true">{isPlaying ? "Ⅱ" : "▶"}</span><span className="audio-control-text">{isPlaying ? "Pause" : "Play"}</span></button><button className="audio-control audio-control-skip" type="button" onClick={() => skipTrack(1)} aria-label="Next track">→</button></div>
+    {currentTrack.spotifyEmbedUrl && !currentTrack.previewUrl && isExpanded ? <iframe className="audio-spotify-embed" src={currentTrack.spotifyEmbedUrl} title={"Spotify player: " + currentTrack.title} width="100%" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" /> : null}
     <button className="audio-preview-waveform" type="button" onClick={handleWaveformClick} disabled={!hasPreview} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress*100)} aria-label={hasPreview ? "Seek through the current preview" : "Preview audio unavailable"}>{bars.map((height,index)=><span className={index/(bars.length-1)<=progress?"is-lit":""} key={index} style={{"--bar-height":height+"%"} as CSSProperties}/>)}</button>
-    <div className="audio-preview-links"><span>{hasPreview?"Preview ready":"Preview unavailable"}</span>{currentTrack.purchaseUrl?<a href={currentTrack.purchaseUrl} target="_blank" rel="noreferrer">Buy full</a>:null}{currentTrack.streamUrl?<a href={currentTrack.streamUrl} target="_blank" rel="noreferrer">Stream</a>:null}</div>
+    <div className="audio-preview-links"><span>{currentTrack.previewUrl ? "Audio preview" : currentTrack.spotifyEmbedUrl ? "Play on Spotify" : "Preview unavailable"}</span>{currentTrack.purchaseUrl?<a href={currentTrack.purchaseUrl} target="_blank" rel="noreferrer">Buy full</a>:null}{currentTrack.streamUrl?<a href={currentTrack.streamUrl} target="_blank" rel="noreferrer">Stream</a>:null}</div>
   </aside>;
 }
 

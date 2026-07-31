@@ -10,6 +10,7 @@ export type AudioPreviewTrack = {
   previewUrl?: string;
   purchaseUrl: string;
   streamUrl?: string;
+  spotifyEmbedUrl?: string;
   sourceLabel?: string;
 };
 
@@ -22,6 +23,7 @@ export type SelectedSound = {
   previewUrl?: string;
   purchaseUrl?: string;
   streamUrl?: string;
+  spotifyEmbedUrl?: string;
 };
 
 export function releaseToPreviewTrack(
@@ -55,6 +57,7 @@ export function selectedSoundToPreviewTrack(
     previewUrl: sound.previewUrl,
     purchaseUrl: sound.purchaseUrl || fallbackPurchaseUrl,
     streamUrl: sound.streamUrl || fallbackStreamUrl,
+    spotifyEmbedUrl: sound.spotifyEmbedUrl,
     sourceLabel: "Selected sound",
   };
 }
