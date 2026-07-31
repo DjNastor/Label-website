@@ -243,7 +243,7 @@ export default function Home() {
         <section className="section releases" id="releases">
           <div className="section-heading">
             <p className="eyebrow">
-              <span /> Fresh from Lukulu
+              <span /> From the catalog
             </p>
             <h2>Latest from the catalog</h2>
             <p>
@@ -252,7 +252,7 @@ export default function Home() {
               and dance-floor movement.
             </p>
             <a href={catalogUrl} target="_blank" rel="noreferrer">
-              View the full catalog <ExternalArrow />
+              Listen to recent releases <ExternalArrow />
             </a>
             <a href="/labels">Explore Afro House labels <ExternalArrow /></a>
           </div>
@@ -373,7 +373,7 @@ export default function Home() {
         <section className="section label-system" aria-labelledby="system-title">
           <div className="section-heading section-heading-compact">
             <p className="eyebrow">
-              <span /> Label standard
+              <span /> Sound identity
             </p>
             <h2 id="system-title">The Lukulu sound</h2>
             <p>
