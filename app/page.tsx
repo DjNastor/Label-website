@@ -31,16 +31,24 @@ const proofPoints = [
 
 const labelValues = [
   {
-    title: "Heritage first",
-    text: "African percussion, melodic storytelling and a strong sense of place guide every release.",
+    kicker: "PERCUSSION",
+    title: "Rhythm comes first",
+    text: "Drums, shakers and movement rooted in African musical language sit at the center of the Lukulu sound.",
   },
   {
-    title: "Club ready",
-    text: "Records are shaped for selectors: clean low-end, patient arrangements and hooks that travel.",
+    kicker: "VOICE",
+    title: "Story carries the record",
+    text: "Melodies and vocals should bring spirit, emotion and memory — not just a hook over a groove.",
   },
   {
-    title: "Artist care",
-    text: "We look for long-term voices, not one-off uploads — context, identity and release vision matter.",
+    kicker: "LOW-END",
+    title: "Built for the floor",
+    text: "The groove needs weight, patience and space so DJs can trust the record in the room.",
+  },
+  {
+    kicker: "PLACE",
+    title: "Identity matters",
+    text: "Every release should feel connected to culture, origin and a clear artistic point of view.",
   },
 ];
 
@@ -52,16 +60,24 @@ const proofPoints = [
 
 const labelValues = [
   {
-    title: "Heritage first",
-    text: "African percussion, melodic storytelling and a strong sense of place guide every release.",
+    kicker: "PERCUSSION",
+    title: "Rhythm comes first",
+    text: "Drums, shakers and movement rooted in African musical language sit at the center of the Lukulu sound.",
   },
   {
-    title: "Club ready",
-    text: "Records are shaped for selectors: clean low-end, patient arrangements and hooks that travel.",
+    kicker: "VOICE",
+    title: "Story carries the record",
+    text: "Melodies and vocals should bring spirit, emotion and memory — not just a hook over a groove.",
   },
   {
-    title: "Artist care",
-    text: "We look for long-term voices, not one-off uploads — context, identity and release vision matter.",
+    kicker: "LOW-END",
+    title: "Built for the floor",
+    text: "The groove needs weight, patience and space so DJs can trust the record in the room.",
+  },
+  {
+    kicker: "PLACE",
+    title: "Identity matters",
+    text: "Every release should feel connected to culture, origin and a clear artistic point of view.",
   },
 ];
 
@@ -125,14 +141,14 @@ export default function Home() {
             </h1>
 
             <p className="hero-intro">
-              Independent Afro House, Afro-Tech and 3-Step from Ladysmith —
-              shaped by African soul, modern electronic energy and dance-floor purpose
-              for DJs, listeners and global dance floors.
+              Independent Afro House, Afro-Tech and 3-Step from Ladysmith,
+              South Africa — carrying African soul, modern electronic energy and
+              dance-floor purpose to DJs, listeners and global stages.
             </p>
 
             <div className="hero-actions">
               <a className="button button-primary" href="#releases">
-                Explore releases <span aria-hidden="true">&darr;</span>
+                Explore the catalog <span aria-hidden="true">&darr;</span>
               </a>
               <a
                 className="button button-ghost"
@@ -149,15 +165,6 @@ export default function Home() {
               <span>AFRO-TECH</span>
               <span>3-STEP</span>
             </div>
-
-            <dl className="hero-proof" aria-label="Lukulu Recordings highlights">
-              {proofPoints.map((point) => (
-                <div key={point.label}>
-                  <dt>{point.value}</dt>
-                  <dd>{point.label}</dd>
-                </div>
-              ))}
-            </dl>
 
             <dl className="hero-proof" aria-label="Lukulu Recordings highlights">
               {proofPoints.map((point) => (
@@ -238,11 +245,11 @@ export default function Home() {
             <p className="eyebrow">
               <span /> Fresh from Lukulu
             </p>
-            <h2>Latest releases</h2>
+            <h2>Latest from the catalog</h2>
             <p>
-              A sharper release desk for new cuts, catalog staples and the next
-              movement in the Lukulu story — built for discovery, listening and
-              demo research.
+              Explore recent Lukulu Recordings releases across Afro House,
+              Afro-Tech and 3-Step — built for deep listening, radio support
+              and dance-floor movement.
             </p>
             <a href={catalogUrl} target="_blank" rel="noreferrer">
               View the full catalog <ExternalArrow />
@@ -281,7 +288,7 @@ export default function Home() {
         <section className="section highlights" aria-labelledby="sounds-title">
           <div className="section-heading section-heading-compact">
             <p className="eyebrow">
-              <span /> From the catalog
+              <span /> Listen first
             </p>
             <h2 id="sounds-title">Selected sounds</h2>
           </div>
@@ -336,9 +343,10 @@ export default function Home() {
               to global dance floors.
             </h2>
             <p>
-              Lukulu Recordings is a South African independent label focused on
-              quality Afro House and Afro-Tech. We release music with heritage,
-              feeling and forward movement&mdash;sounds made to travel.
+              Lukulu Recordings was founded in Ladysmith, South Africa, with a
+              clear purpose: to carry African-rooted electronic music beyond
+              borders. The label champions producers, vocalists and collaborators
+              creating music with identity, groove and emotional depth.
             </p>
             <blockquote>
               &ldquo;African roots. Electronic pulse. Music without
@@ -367,40 +375,17 @@ export default function Home() {
             <p className="eyebrow">
               <span /> Label standard
             </p>
-            <h2 id="system-title">What we listen for</h2>
+            <h2 id="system-title">The Lukulu sound</h2>
             <p>
               A clear creative filter helps artists understand the label and gives
-              visitors a stronger reason to explore the catalog.
+              listeners a stronger reason to explore the catalog.
             </p>
           </div>
 
           <div className="value-grid">
-            {labelValues.map((value, index) => (
+            {labelValues.map((value) => (
               <article key={value.title} className="value-card">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{value.title}</h3>
-                <p>{value.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section label-system" aria-labelledby="system-title">
-          <div className="section-heading section-heading-compact">
-            <p className="eyebrow">
-              <span /> Label standard
-            </p>
-            <h2 id="system-title">What we listen for</h2>
-            <p>
-              A clear creative filter helps artists understand the label and gives
-              visitors a stronger reason to explore the catalog.
-            </p>
-          </div>
-
-          <div className="value-grid">
-            {labelValues.map((value, index) => (
-              <article key={value.title} className="value-card">
-                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span>{value.kicker}</span>
                 <h3>{value.title}</h3>
                 <p>{value.text}</p>
               </article>
@@ -420,7 +405,7 @@ export default function Home() {
             </h2>
             <p>
               Producers, vocalists and collaborators shaping the Lukulu
-              catalog — a family of rooted, forward-moving electronic music.
+              catalog — a family of rooted, forward-facing African electronic music.
             </p>
           </div>
 
@@ -450,12 +435,11 @@ export default function Home() {
             <p className="eyebrow eyebrow-light">
               <span /> Demo portal
             </p>
-            <h2 id="submissions-title">LabelRadar submissions</h2>
+            <h2 id="submissions-title">Send your sound to Lukulu.</h2>
             <p>
-              Send unreleased Afro House, Afro-Tech and 3-Step demos through the
-              Lukulu Recordings LabelRadar portal. Keep the file focused, leave
-              room for the groove, and include the story, credits and release
-              vision so the team can review quickly.
+              We accept unreleased Afro House, Afro-Tech and 3-Step demos through
+              LabelRadar. Send focused music with strong rhythm, clear identity
+              and a release vision.
             </p>
             <div className="demo-brief" aria-label="Demo submission checklist">
               <span className="demo-brief-kicker">Before you send</span>
@@ -465,18 +449,18 @@ export default function Home() {
                   <span>No public links, bootlegs or uncleared samples.</span>
                 </li>
                 <li>
-                  <strong>Label-fit first</strong>
-                  <span>Afro House, Afro-Tech and 3-Step with a clear floor pulse.</span>
+                  <strong>Label fit matters</strong>
+                  <span>Afro House, Afro-Tech and 3-Step with a clear groove.</span>
                 </li>
                 <li>
                   <strong>Context helps</strong>
-                  <span>Tell us the story, collaborators and release vision.</span>
+                  <span>Include credits, collaborators, story and release plan.</span>
                 </li>
               </ul>
             </div>
             <div className="story-links">
               <a href={labelRadarUrl} target="_blank" rel="noreferrer">
-                Open LabelRadar <ExternalArrow />
+                Submit through LabelRadar <ExternalArrow />
               </a>
               <a href={catalogUrl} target="_blank" rel="noreferrer">
                 Study the catalog <ExternalArrow />
@@ -547,10 +531,10 @@ export default function Home() {
             <p className="eyebrow eyebrow-light">
               <span /> Work with us
             </p>
-            <h2>Send us your sound.</h2>
+            <h2>Work with us.</h2>
             <p>
-              Demo submissions, licensing enquiries, collaborations, press and
-              label business — reach the team directly or use LabelRadar for demos.
+              For licensing, collaborations, press, bookings, catalog opportunities
+              and label business, contact the Lukulu Recordings team directly.
             </p>
           </div>
           <a

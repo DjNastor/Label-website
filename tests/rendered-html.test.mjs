@@ -122,7 +122,7 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /https:\/\/www\.beatport\.com\/label\/lukulu-recordings\/53294/);
   assert.match(html, /https:\/\/www\.labelradar\.com\/labels\/LukuluRecordings\/portal/);
   assert.match(html, /https:\/\/open\.spotify\.com\/playlist\/6skrxjmzEL0trnVnysbDdW/);
-  assert.match(html, /LabelRadar submissions/);
+  assert.match(html, /Send your sound to Lukulu./);
   assert.match(html, /Signal feed/);
   assert.match(html, /Beatport Greenroom label account 12524/);
   assert.match(html, /A zulu man/);

@@ -4,15 +4,16 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://lukulurecordings.com"),
   title: {
-    default: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step",
+    default: "Lukulu Recordings — Afro House from Ladysmith to the World Label from South Africa",
     template: "%s | Lukulu Recordings",
   },
   description:
-    "Lukulu Recordings is a South African independent label releasing Afro House, Afro-Tech and 3-Step music from Ladysmith to the world.",
+    "Lukulu Recordings is an independent South African music label from Ladysmith releasing Afro House, Afro-Tech and 3-Step music for DJs, listeners and global dance floors.",
   applicationName: "Lukulu Recordings",
   keywords: [
     "Lukulu Recordings",
-    "Afro House label",
+    "South African Afro House label",
+    "Afro House record label",
     "Afro-Tech",
     "3-Step",
     "South African house music",
@@ -24,9 +25,9 @@ export const metadata: Metadata = {
   publisher: "Lukulu Recordings",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step",
+    title: "Lukulu Recordings — Afro House from Ladysmith to the World",
     description:
-      "Independent Afro House, Afro-Tech and 3-Step from Ladysmith, South Africa — built for global dance floors.",
+      "Independent Afro House, Afro-Tech and 3-Step releases rooted in African rhythm, electronic pulse and global dance-floor culture.",
     url: "/",
     siteName: "Lukulu Recordings",
     images: [
@@ -42,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lukulu Recordings | Afro House, Afro-Tech & 3-Step",
+    title: "Lukulu Recordings — Afro House from Ladysmith to the World",
     description:
-      "Independent Afro House, Afro-Tech and 3-Step from Ladysmith, South Africa.",
+      "Afro House, Afro-Tech and 3-Step from Ladysmith, South Africa — rooted in African rhythm and built for global dance floors.",
     images: ["/assets/lukulu-textile-wordmark.jpg"],
   },
   robots: {
