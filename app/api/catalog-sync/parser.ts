@@ -189,7 +189,7 @@ function safeReleaseUrl(
     const expectedHost = platform === "traxsource" ? "traxsource.com" : "beatport.com";
     if (
       parsed.protocol !== "https:" ||
-      !parsed.hostname.toLowerCase().endsWith(expectedHost) ||
+      !(parsed.hostname.toLowerCase() === expectedHost || parsed.hostname.toLowerCase().endsWith("." + expectedHost)) ||
       !releasePaths[platform].test(parsed.pathname)
     ) {
       return null;
