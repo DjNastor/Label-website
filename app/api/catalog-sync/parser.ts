@@ -265,8 +265,7 @@ function isUsefulTitle(value: string): boolean {
   return (
     value.length >= 2 &&
     value.length <= 120 &&
-    !/^(?:label|genre|artist|chart|login|follow|add to queue|add to playlist)$/i.test(value) &&
-    !/\b(?:original mix|extended mix)\s*$/i.test(value)
+    !/^(?:label|genre|artist|chart|login|follow|add to queue|add to playlist)$/i.test(value)
   );
 }
 
