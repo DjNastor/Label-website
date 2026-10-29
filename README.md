@@ -29,9 +29,11 @@ This starter does not use `wrangler.jsonc`.
 
 ## Lukulu Recordings Integrations
 
-- `/api/catalog-sync` is the platform catalog refresh contract. It tries the
-  configured Traxsource and Beatport label URLs, returns normalized release
-  rows, and falls back to the curated catalog when a source blocks or times out.
+- `/api/catalog-sync` refreshes the public Traxsource and Beatport label pages.
+  It parses structured release metadata and recognized release links, returns
+  normalized rows, and uses the curated catalog if a source blocks, times out,
+  or changes its page format. Unknown artist and date values are labeled as
+  unavailable rather than guessed.
 - `/api/news` is the News tab aggregation contract. Set comma-separated
   `SOCIAL_FEED_URLS` to RSS, Atom, JSON Feed, or simple JSON endpoints; the UI
   auto-refreshes every five minutes.
@@ -45,7 +47,7 @@ Optional production env vars:
 
 ```ini
 TRAXSOURCE_LABEL_URL=https://www.traxsource.com/label/53294/lukulu-recordings
-BEATPORT_LABEL_URL=https://www.beatport.com/label/lukulu-recordings/53294
+BEATPORT_LABEL_URL=https://www.beatport.com/label/lukulu-recordings/90528
 SOCIAL_FEED_URLS=
 ```
 
