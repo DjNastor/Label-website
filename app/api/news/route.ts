@@ -2,10 +2,13 @@ import { fallbackNewsPayload, type NewsItem, type NewsPayload } from "../../news
 
 export const dynamic = "force-dynamic";
 
-const feedUrls = (process.env.SOCIAL_FEED_URLS || "")
-  .split(",")
-  .map((url) => url.trim())
-  .filter(Boolean);
+const defaultFeedUrls = [
+  "https://musictech.com/feed/",
+  "https://www.attackmagazine.com/feed/",
+];
+const feedUrls = process.env.SOCIAL_FEED_URLS
+  ? process.env.SOCIAL_FEED_URLS.split(",").map((url) => url.trim()).filter(Boolean)
+  : defaultFeedUrls;
 
 export async function GET() {
   const items = await collectFeedItems();
@@ -31,16 +34,15 @@ async function collectFeedItems(): Promise<NewsItem[]> {
       if (!response.ok) continue;
 
       const text = await response.text();
-      imported.push(...parseJsonFeed(feedUrl, text));
-      if (imported.length === 0) {
-        imported.push(...parseXmlFeed(feedUrl, text));
-      }
+      const parsedJson = parseJsonFeed(feedUrl, text);
+      imported.push(...(parsedJson.length ? parsedJson : parseXmlFeed(feedUrl, text)));
     } catch {
       continue;
     }
   }
 
-  return imported
+  const unique = new Map(imported.map((item) => [item.href, item]));
+  return [...unique.values()]
     .sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -83,7 +85,8 @@ function parseJsonFeed(feedUrl: string, body: string): NewsItem[] {
       const row = asRecord(item);
       const title = asText(row.title) || asText(row.text) || "Lukulu update";
       const summary =
-        asText(row.summary) || asText(row.content) || asText(row.text) || title;
+        (asText(row.summary) || asText(row.content) || asText(row.text) || title)
+          .slice(0, 200);
 
       return {
         id: asText(row.id) || "json-" + index + "-" + hashText(title),
@@ -92,7 +95,7 @@ function parseJsonFeed(feedUrl: string, body: string): NewsItem[] {
         source: asText(row.source) || hostname(feedUrl),
         href: safeUrl(row.href) || safeUrl(row.url) || feedUrl,
         publishedAt: asText(row.publishedAt) || asText(row.date) || new Date().toISOString(),
-        type: classifyType(title + " " + summary),
+        type: "industry",
       };
     });
   } catch {
@@ -113,7 +116,7 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
         tagText(block, "summary") ||
         tagText(block, "content") ||
         title,
-    );
+    ).slice(0, 200);
     const href = safeUrl(tagText(block, "link")) || feedUrl;
 
     return {
@@ -127,7 +130,7 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
         tagText(block, "published") ||
         tagText(block, "updated") ||
         new Date().toISOString(),
-      type: classifyType(title + " " + summary),
+      type: "industry",
     };
   });
 }
@@ -173,19 +176,6 @@ function decodeHtml(value: string): string {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
-}
-
-function classifyType(value: string): NewsItem["type"] {
-  const lowered = value.toLowerCase();
-  if (/(release|track|ep|album|catalog|traxsource|beatport)/.test(lowered)) {
-    return "release";
-  }
-
-  if (/(press|feature|premiere|interview)/.test(lowered)) {
-    return "press";
-  }
-
-  return "social";
 }
 
 function hostname(url: string): string {
