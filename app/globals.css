@@ -4581,7 +4581,7 @@ body{padding-bottom:0}.audio-preview-player{position:fixed;z-index:120;right:1re
 
 .store-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.8rem, 1.7vw, 1.5rem);
 }
 
