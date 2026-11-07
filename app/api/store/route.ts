@@ -1,4 +1,4 @@
-import { publicStoreProduct, storeConcepts, type StorePayload } from "../../store-data";
+import { publicStoreProduct, storeConcepts, type StorePayload, type StoreProduct } from "../../store-data";
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +46,7 @@ async function getConfiguredProducts(urlText: string) {
     return rows
       .slice(0, 80)
       .map(publicStoreProduct)
-      .filter((product) => {
+      .filter((product): product is StoreProduct => {
         if (!product || seen.has(product.id)) return false;
         seen.add(product.id);
         return true;
