@@ -84,7 +84,7 @@ export default function NewsFeed() {
       </div>
       <article className="signal-feature" key={active.id} aria-live="off">
         <div className="signal-feature-meta">
-          <span>{active.type === "release" ? "RELEASE" : active.type === "press" ? "FEATURE" : "LABEL NOTE"}</span>
+          <span>{active.type === "industry" ? "MUSIC TECH" : active.type === "release" ? "RELEASE" : active.type === "press" ? "FEATURE" : "LABEL NOTE"}</span>
           <time dateTime={active.publishedAt}>{formatDate(active.publishedAt)}</time>
         </div>
         <h3>{active.title}</h3>
