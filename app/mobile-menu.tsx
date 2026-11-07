@@ -58,8 +58,8 @@ export default function MobileMenu() {
         <a href="#releases" onClick={closeMenu}>
           Releases
         </a>
-        <a href="#news" onClick={closeMenu}>
-          News
+        <a href="#listen" onClick={closeMenu}>
+          Listen
         </a>
         <a href="#artists" onClick={closeMenu}>
           Artists
@@ -74,7 +74,9 @@ export default function MobileMenu() {
           Contact
         </a>
         <a
-          href="mailto:lukulurecordings@gmail.com?subject=Demo%20submission"
+          href="https://www.labelradar.com/labels/LukuluRecordings/portal"
+          target="_blank"
+          rel="noreferrer"
           onClick={closeMenu}
         >
           Send a demo <span aria-hidden="true">↗</span>
