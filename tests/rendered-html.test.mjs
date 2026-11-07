@@ -218,3 +218,38 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
 
   await assert.rejects(access(new URL("app/_sites-preview", projectRoot)));
 });
+
+test("store never marks an item purchasable without an HTTPS checkout and ZAR price", async () => {
+  const source = await readFile(new URL("../app/store-data.ts", import.meta.url), "utf8");
+  const { publicStoreProduct, storeConcepts } = evaluateTsx(source, "app/store-data.ts");
+
+  assert.ok(storeConcepts.every((item) =>
+    item.status === "coming_soon" && item.checkoutUrl === null && item.priceZar === null,
+  ));
+
+  const base = {
+    id: "validation-test",
+    name: "Test product",
+    category: "VST Plugins",
+    description: "Example only, not a real product",
+    status: "available",
+    priceZar: 249,
+  };
+
+  const insecure = publicStoreProduct({ ...base, checkoutUrl: "http://example.com/checkout" });
+  assert.equal(insecure.status, "coming_soon");
+  assert.equal(insecure.checkoutUrl, null);
+  assert.equal(insecure.priceZar, null);
+
+  const missingPrice = publicStoreProduct({
+    ...base, priceZar: null, checkoutUrl: "https://example.com/checkout",
+  });
+  assert.equal(missingPrice.status, "coming_soon");
+
+  const configured = publicStoreProduct({
+    ...base, checkoutUrl: "https://example.com/checkout",
+  });
+  assert.equal(configured.status, "available");
+  assert.equal(configured.priceZar, 249);
+  assert.match(configured.checkoutUrl, /^https:\/\//);
+});
