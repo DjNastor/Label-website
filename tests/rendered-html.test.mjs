@@ -109,7 +109,8 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /Rooted in <em>rhythm\.<\/em>/);
   assert.match(html, /Built for the <em>world\.<\/em>/);
   assert.match(html, /id="releases"/);
-  assert.match(html, /id="news"/);
+  assert.match(html, /id="listen"/);
+  assert.doesNotMatch(html, /id="news"/);
   assert.match(html, /id="artists"/);
   assert.match(html, /id="submissions"/);
   assert.match(html, /id="about"/);
@@ -123,11 +124,13 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /https:\/\/www\.labelradar\.com\/labels\/LukuluRecordings\/portal/);
   assert.match(html, /https:\/\/open\.spotify\.com\/playlist\/6skrxjmzEL0trnVnysbDdW/);
   assert.match(html, /Send your sound to Lukulu./);
-  assert.match(html, /Signal feed/);
+  assert.match(html, /Selected sounds/);
+  assert.match(html, /CATALOG SPOTLIGHT/);
+  assert.doesNotMatch(html, /COMING NEXT/);
   assert.match(html, /Beatport Greenroom label account 12524/);
   assert.match(html, /A zulu man/);
   assert.match(html, /Follow the sign/);
-  assert.match(html, /Beatport Greenroom catalog snapshot added/);
+
   assert.match(html, /Preview Reach Deep by DJ Nastor/);
   assert.doesNotMatch(html, /aria-label="Audio preview player"/);
   assert.match(html, /↗/);
@@ -143,7 +146,7 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
   ]);
   const manifest = JSON.parse(packageJson);
 
-  assert.match(layout, /Lukulu Recordings \| Afro House & Afro-Tech/);
+  assert.match(layout, /Lukulu Recordings \| Afro House, Afro-Tech & 3-Step/);
   assert.match(layout, /themeColor:\s*"#120d0a"/);
   assert.doesNotMatch(layout, /next\/font|fonts\.googleapis\.com/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
