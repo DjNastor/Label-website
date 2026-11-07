@@ -56,22 +56,19 @@ export default function MobileMenu() {
       </summary>
       <nav aria-label="Mobile navigation">
         <a href="#releases" onClick={closeMenu}>
-          Releases
+          Music
         </a>
-        <a href="#listen" onClick={closeMenu}>
-          Listen
+        <a href="#store" onClick={closeMenu}>
+          Store
         </a>
-        <a href="#artists" onClick={closeMenu}>
-          Artists
+        <a href="#news" onClick={closeMenu}>
+          Updates
         </a>
         <a href="#submissions" onClick={closeMenu}>
           Submit
         </a>
         <a href="#about" onClick={closeMenu}>
           About
-        </a>
-        <a href="#contact" onClick={closeMenu}>
-          Contact
         </a>
         <a
           href="https://www.labelradar.com/labels/LukuluRecordings/portal"
