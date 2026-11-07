@@ -47,7 +47,7 @@ export default function Storefront({ compact = false }: { compact?: boolean }) {
     [filter, products],
   );
 
-  const displayed = compact ? products.slice(0, 3) : shown;
+  const displayed = compact ? products.slice(0, 4) : shown;
 
   return (
     <div className="storefront" data-store-source={source}>
