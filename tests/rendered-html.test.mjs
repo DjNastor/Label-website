@@ -41,6 +41,8 @@ async function renderPage() {
     musicExperienceSource,
     newsDataSource,
     newsClientSource,
+    storeDataSource,
+    storeClientSource,
   ] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/mobile-menu.tsx", import.meta.url), "utf8"),
@@ -52,6 +54,8 @@ async function renderPage() {
     readFile(new URL("../app/music-experience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/news-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/news-client.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/store-data.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/store-client.tsx", import.meta.url), "utf8"),
   ]);
   const mobileMenu = evaluateTsx(
     mobileMenuSource,
@@ -91,12 +95,17 @@ async function renderPage() {
   const newsClient = evaluateTsx(newsClientSource, "app/news-client.tsx", {
     "./news-data": newsData,
   });
+  const storeData = evaluateTsx(storeDataSource, "app/store-data.ts");
+  const storeClient = evaluateTsx(storeClientSource, "app/store-client.tsx", {
+    "./store-data": storeData,
+  });
   const page = evaluateTsx(pageSource, "app/page.tsx", {
     "./audio-preview-player": audioPreviewPlayer,
     "./catalog-client": catalogClient,
     "./mobile-menu": mobileMenu,
     "./music-experience": musicExperience,
     "./news-client": newsClient,
+    "./store-client": storeClient,
   });
 
   return renderToStaticMarkup(page.default());
@@ -110,8 +119,9 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /Built for the <em>world\.<\/em>/);
   assert.match(html, /id="releases"/);
   assert.match(html, /id="listen"/);
-  assert.doesNotMatch(html, /id="news"/);
-  assert.match(html, /id="artists"/);
+  assert.match(html, /id="news"/);
+  assert.match(html, /id="store"/);
+  assert.doesNotMatch(html, /id="artists"/);
   assert.match(html, /id="submissions"/);
   assert.match(html, /id="about"/);
   assert.match(html, /id="contact"/);
@@ -125,6 +135,12 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /https:\/\/open\.spotify\.com\/playlist\/6skrxjmzEL0trnVnysbDdW/);
   assert.match(html, /Send your sound to Lukulu./);
   assert.match(html, /Selected sounds/);
+  assert.match(html, /Lukulu Store/);
+  assert.match(html, /VST Plugins/);
+  assert.match(html, /Product roadmap/);
+  assert.match(html, /From Lukulu/);
+  assert.match(html, /id="news"/);
+  assert.doesNotMatch(html, /Buy now/);
   assert.match(html, /CATALOG SPOTLIGHT/);
   assert.doesNotMatch(html, /COMING NEXT/);
   assert.match(html, /Beatport Greenroom label account 12524/);
@@ -159,9 +175,11 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
     ".cover-card",
     ".audio-preview-player",
     ".audio-preview-waveform",
-    ".news-grid",
+    ".signal-carousel",
+    ".store-product",
+    ".store-grid",
     ".submission-portal",
-    ".artist-list",
+    ".store-page",
     "@font-face",
     "Maputo",
     "Afrika TUbuntu",
