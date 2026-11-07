@@ -4,7 +4,8 @@ import Storefront from "../store-client";
 export const metadata: Metadata = {
   title: "Lukulu Store — Music Production Tools",
   description:
-    "Discover original Lukulu Recordings VST plugins, FL Studio scripts, producer apps and studio technology.",
+    "Explore upcoming and released Lukulu Recordings VST plugins, FL Studio scripts, music-production apps and studio tools.",
+  alternates: { canonical: "/store" },
 };
 
 export default function StorePage() {
