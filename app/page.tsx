@@ -4,7 +4,6 @@ import MobileMenu from "./mobile-menu";
 import { AudioPreviewProvider, PreviewPlayer } from "./audio-preview-player";
 import { CatalogProvider, ReleaseList } from "./catalog-client";
 import MusicExperience from "./music-experience";
-import NewsFeed from "./news-client";
 
 const catalogUrl = "https://www.traxsource.com/label/53294/lukulu-recordings";
 const beatportUrl = "https://www.beatport.com/label/lukulu-recordings/53294";
@@ -79,7 +78,7 @@ export default function Home() {
 
         <nav className="desktop-nav" aria-label="Main navigation">
           <a href="#releases">Releases</a>
-          <a href="#news">News</a>
+          <a href="#listen">Listen</a>
           <a href="#artists">Artists</a>
           <a href="#submissions">Submit</a>
           <a href="#about">About</a>
@@ -195,7 +194,7 @@ export default function Home() {
           </a>
           <nav aria-label="Sticky navigation">
             <a href="#releases">Releases</a>
-            <a href="#news">News</a>
+            <a href="#listen">Listen</a>
             <a href="#artists">Artists</a>
             <a href="#submissions">Submit</a>
             <a href="#about">About</a>
@@ -233,13 +232,11 @@ export default function Home() {
               <ReleaseList />
             </CatalogProvider>
 
-            <aside className="coming-next">
-              <p className="mini-label">COMING NEXT</p>
+            <aside className="coming-next" aria-labelledby="catalog-spotlight-title">
+              <p className="mini-label">CATALOG SPOTLIGHT</p>
               <div className="coming-main">
-                <time dateTime="2026-07-20">
-                  20 &middot; 07 &middot; 2026
-                </time>
-                <h3>
+                <span className="coming-meta">LUKULU SELECTS</span>
+                <h3 id="catalog-spotlight-title">
                   LOST
                   <br />
                   IN A DREAM
@@ -247,16 +244,16 @@ export default function Home() {
                 <p>DJ NASTOR</p>
               </div>
               <div className="coming-footer">
-                <span>Aba&apos;Belive</span>
-                <time dateTime="2026-08-28">
-                  28 &middot; 08 &middot; 2026
-                </time>
+                <span>Discover the catalog</span>
+                <a href={catalogUrl} target="_blank" rel="noreferrer">
+                  Listen now <ExternalArrow />
+                </a>
               </div>
             </aside>
           </div>
         </section>
 
-        <section className="section highlights" aria-labelledby="sounds-title">
+        <section className="section highlights" id="listen" aria-labelledby="sounds-title">
           <div className="section-heading section-heading-compact">
             <p className="eyebrow">
               <span /> Listen first
@@ -265,20 +262,6 @@ export default function Home() {
           </div>
 
           <MusicExperience catalogUrl={catalogUrl} spotifyUrl={spotifyPlaylistUrl} />
-        </section>
-
-        <section className="section news" id="news" aria-labelledby="news-title">
-          <div className="section-heading">
-            <p className="eyebrow">
-              <span /> Signal feed
-            </p>
-            <h2 id="news-title">News</h2>
-            <a href="/api/news" target="_blank" rel="noreferrer">
-              Live feed <ExternalArrow />
-            </a>
-          </div>
-
-          <NewsFeed />
         </section>
 
         <section className="story" id="about">
