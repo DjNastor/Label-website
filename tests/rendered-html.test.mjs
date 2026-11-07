@@ -137,6 +137,7 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /Selected sounds/);
   assert.match(html, /Lukulu Store/);
   assert.match(html, /VST Plugins/);
+  assert.match(html, /Studio Tech/);
   assert.match(html, /Product roadmap/);
   assert.match(html, /From Lukulu/);
   assert.match(html, /id="news"/);
