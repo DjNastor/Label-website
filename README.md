@@ -32,9 +32,10 @@ This starter does not use `wrangler.jsonc`.
 - `/api/catalog-sync` is the platform catalog refresh contract. It tries the
   configured Traxsource and Beatport label URLs, returns normalized release
   rows, and falls back to the curated catalog when a source blocks or times out.
-- `/api/news` is the News tab aggregation contract. Set comma-separated
-  `SOCIAL_FEED_URLS` to RSS, Atom, JSON Feed, or simple JSON endpoints; the UI
-  auto-refreshes every five minutes.
+- `/api/news` remains an optional, legacy news aggregation endpoint. The
+  public homepage no longer displays a news section. Set comma-separated
+  `SOCIAL_FEED_URLS` only if another client needs RSS, Atom, JSON Feed, or
+  simple JSON sources.
 - Demo submissions route through the Lukulu Recordings LabelRadar portal:
   `https://www.labelradar.com/labels/LukuluRecordings/portal`.
 - The persistent preview player supports `previewUrl` fields in catalog data.
@@ -48,6 +49,19 @@ TRAXSOURCE_LABEL_URL=https://www.traxsource.com/label/53294/lukulu-recordings
 BEATPORT_LABEL_URL=https://www.beatport.com/label/lukulu-recordings/53294
 SOCIAL_FEED_URLS=
 ```
+
+## Homepage refresh (November 2026)
+
+The public site now focuses on music discovery rather than a news feed:
+
+- Releases and selected sounds are the primary discovery destinations.
+- Desktop, sticky, and mobile navigation use the same Listen destination.
+- The former upcoming-release card is now an evergreen catalog spotlight.
+- Mobile demo submissions open the same LabelRadar portal as desktop.
+- The legacy news API is unchanged but is no longer displayed publicly.
+
+This branch intentionally leaves deployment and production integrations
+untouched. Run `npm install`, `npm run lint`, and `npm test` before merging.
 
 ## Workspace Auth Headers
 
