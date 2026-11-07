@@ -1846,6 +1846,29 @@ section[id] {
   padding: clamp(2.5rem, 5vw, 5.5rem) 0 2.5rem;
 }
 
+.coming-meta {
+  color: rgba(244, 238, 228, 0.62);
+  font-family: var(--mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+}
+
+.coming-footer a {
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.coming-footer a:hover,
+.coming-footer a:focus-visible {
+  color: var(--clay);
+}
+
 .coming-main time,
 .coming-footer time {
   font-family: var(--mono);
