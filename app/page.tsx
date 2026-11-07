@@ -45,9 +45,9 @@ export default function Home() {
         </a>
 
         <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#releases">Releases</a>
-          <a href="#news">Updates</a>
+          <a href="#releases">Music</a>
           <a href="#store">Store</a>
+          <a href="#news">Updates</a>
           <a href="#submissions">Submit</a>
           <a href="#about">About</a>
         </nav>
@@ -160,12 +160,12 @@ export default function Home() {
             LUKULU <span>REC.</span>
           </a>
           <nav aria-label="Sticky navigation">
-            <a href="#releases">Releases</a>
-            <a href="#news">Updates</a>
+            <a href="#releases">Music</a>
             <a href="#store">Store</a>
+            <a href="#news">Updates</a>
             <a href="#submissions">Submit</a>
             <a href="#about">About</a>
-            </nav>
+          </nav>
           <a
             className="sticky-demo"
             href={labelRadarUrl}
