@@ -136,11 +136,11 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
 
 // Atom entries commonly use <link href="..." rel="alternate" /> instead of RSS link text.
 function atomLink(block: string): string {
-  const links = [...block.matchAll(/<link\\b([^>]*)\\/?>/gi)]
+  const links = [...block.matchAll(/<link\b([^>]*)\/?>/gi)]
     .map((match) => {
       const attributes = match[1];
-      const href = attributes.match(/\\bhref\\s*=\\s*(?:"([^"]*)"|'([^']*)')/i);
-      const rel = attributes.match(/\\brel\\s*=\\s*(?:"([^"]*)"|'([^']*)')/i);
+      const href = attributes.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      const rel = attributes.match(/\brel\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
       return {
         href: safeUrl(decodeHtml(href?.[1] || href?.[2] || "")),
         rel: rel?.[1] || rel?.[2] || "",
