@@ -2,10 +2,13 @@ import { fallbackNewsPayload, type NewsItem, type NewsPayload } from "../../news
 
 export const dynamic = "force-dynamic";
 
-const feedUrls = (process.env.SOCIAL_FEED_URLS || "")
-  .split(",")
-  .map((url) => url.trim())
-  .filter(Boolean);
+const defaultFeedUrls = [
+  "https://musictech.com/feed/",
+  "https://www.attackmagazine.com/feed/",
+];
+const feedUrls = process.env.SOCIAL_FEED_URLS
+  ? process.env.SOCIAL_FEED_URLS.split(",").map((url) => url.trim()).filter(Boolean)
+  : defaultFeedUrls;
 
 export async function GET() {
   const items = await collectFeedItems();
@@ -23,24 +26,22 @@ export async function GET() {
 }
 
 async function collectFeedItems(): Promise<NewsItem[]> {
-  const imported: NewsItem[] = [];
-
-  for (const feedUrl of feedUrls) {
+  // Read independent sources concurrently so one slow publisher cannot delay the others.
+  const feedResults = await Promise.all(feedUrls.map(async (feedUrl) => {
     try {
       const response = await fetchWithTimeout(feedUrl);
-      if (!response.ok) continue;
+      if (!response.ok) return [];
 
-      const text = await response.text();
-      imported.push(...parseJsonFeed(feedUrl, text));
-      if (imported.length === 0) {
-        imported.push(...parseXmlFeed(feedUrl, text));
-      }
+      const body = await response.text();
+      const parsedJson = parseJsonFeed(feedUrl, body);
+      return parsedJson.length ? parsedJson : parseXmlFeed(feedUrl, body);
     } catch {
-      continue;
+      return [];
     }
-  }
+  }));
 
-  return imported
+  const unique = new Map(feedResults.flat().map((item) => [item.href, item]));
+  return [...unique.values()]
     .sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -83,7 +84,8 @@ function parseJsonFeed(feedUrl: string, body: string): NewsItem[] {
       const row = asRecord(item);
       const title = asText(row.title) || asText(row.text) || "Lukulu update";
       const summary =
-        asText(row.summary) || asText(row.content) || asText(row.text) || title;
+        (asText(row.summary) || asText(row.content) || asText(row.text) || title)
+          .slice(0, 200);
 
       return {
         id: asText(row.id) || "json-" + index + "-" + hashText(title),
@@ -92,7 +94,7 @@ function parseJsonFeed(feedUrl: string, body: string): NewsItem[] {
         source: asText(row.source) || hostname(feedUrl),
         href: safeUrl(row.href) || safeUrl(row.url) || feedUrl,
         publishedAt: asText(row.publishedAt) || asText(row.date) || new Date().toISOString(),
-        type: classifyType(title + " " + summary),
+        type: "industry",
       };
     });
   } catch {
@@ -113,8 +115,8 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
         tagText(block, "summary") ||
         tagText(block, "content") ||
         title,
-    );
-    const href = safeUrl(tagText(block, "link")) || feedUrl;
+    ).slice(0, 200);
+    const href = atomLink(block) || safeUrl(tagText(block, "link")) || feedUrl;
 
     return {
       id: "xml-" + index + "-" + hashText(title),
@@ -127,9 +129,28 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
         tagText(block, "published") ||
         tagText(block, "updated") ||
         new Date().toISOString(),
-      type: classifyType(title + " " + summary),
+      type: "industry",
     };
   });
+}
+
+// Atom entries commonly use <link href="..." rel="alternate" /> instead of RSS link text.
+function atomLink(block: string): string {
+  const links = [...block.matchAll(/<link\b([^>]*)\/?>/gi)]
+    .map((match) => {
+      const attributes = match[1];
+      const href = attributes.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      const rel = attributes.match(/\brel\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      return {
+        href: safeUrl(decodeHtml(href?.[1] || href?.[2] || "")),
+        rel: rel?.[1] || rel?.[2] || "",
+      };
+    })
+    .filter((link) => link.href);
+
+  return links.find((link) => link.rel === "alternate")?.href ||
+    links.find((link) => !link.rel)?.href ||
+    links[0]?.href || "";
 }
 
 function asRecord(value: unknown): Record<string, unknown> {
@@ -173,19 +194,6 @@ function decodeHtml(value: string): string {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
-}
-
-function classifyType(value: string): NewsItem["type"] {
-  const lowered = value.toLowerCase();
-  if (/(release|track|ep|album|catalog|traxsource|beatport)/.test(lowered)) {
-    return "release";
-  }
-
-  if (/(press|feature|premiere|interview)/.test(lowered)) {
-    return "press";
-  }
-
-  return "social";
 }
 
 function hostname(url: string): string {

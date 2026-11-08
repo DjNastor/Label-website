@@ -4,6 +4,7 @@ import MobileMenu from "./mobile-menu";
 import { AudioPreviewProvider, PreviewPlayer } from "./audio-preview-player";
 import { CatalogProvider, ReleaseList } from "./catalog-client";
 import MusicExperience from "./music-experience";
+import Storefront from "./store-client";
 import NewsFeed from "./news-client";
 
 const catalogUrl = "https://www.traxsource.com/label/53294/lukulu-recordings";
@@ -12,44 +13,10 @@ const labelRadarUrl = "https://www.labelradar.com/labels/LukuluRecordings/portal
 const spotifyPlaylistUrl =
   "https://open.spotify.com/playlist/6skrxjmzEL0trnVnysbDdW";
 
-const artists = [
-  "DJ Nastor",
-  "Dubnakave",
-  "Vorn Annunaki",
-  "Da Cord",
-  "DJ Mukumu",
-  "Quexdeep",
-  "Lukulu",
-  "Crash Zulu",
-];
-
 const proofPoints = [
   { value: "2012", label: "Founded in Ladysmith" },
-  { value: "8+", label: "Artists and collaborators" },
+  { value: "Independent", label: "Music label & creative studio" },
   { value: "3", label: "Core sounds: Afro House, Afro-Tech, 3-Step" },
-];
-
-const labelValues = [
-  {
-    kicker: "PERCUSSION",
-    title: "Rhythm comes first",
-    text: "Drums, shakers and movement rooted in African musical language sit at the center of the Lukulu sound.",
-  },
-  {
-    kicker: "VOICE",
-    title: "Story carries the record",
-    text: "Melodies and vocals should bring spirit, emotion and memory — not just a hook over a groove.",
-  },
-  {
-    kicker: "LOW-END",
-    title: "Built for the floor",
-    text: "The groove needs weight, patience and space so DJs can trust the record in the room.",
-  },
-  {
-    kicker: "PLACE",
-    title: "Identity matters",
-    text: "Every release should feel connected to culture, origin and a clear artistic point of view.",
-  },
 ];
 
 function ExternalArrow() {
@@ -78,12 +45,11 @@ export default function Home() {
         </a>
 
         <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#releases">Releases</a>
-          <a href="#news">News</a>
-          <a href="#artists">Artists</a>
+          <a href="#releases">Music</a>
+          <a href="#store">Store</a>
+          <a href="#news">Updates</a>
           <a href="#submissions">Submit</a>
           <a href="#about">About</a>
-          <a href="#contact">Contact</a>
         </nav>
 
         <a
@@ -194,12 +160,11 @@ export default function Home() {
             LUKULU <span>REC.</span>
           </a>
           <nav aria-label="Sticky navigation">
-            <a href="#releases">Releases</a>
-            <a href="#news">News</a>
-            <a href="#artists">Artists</a>
+            <a href="#releases">Music</a>
+            <a href="#store">Store</a>
+            <a href="#news">Updates</a>
             <a href="#submissions">Submit</a>
             <a href="#about">About</a>
-            <a href="#contact">Contact</a>
           </nav>
           <a
             className="sticky-demo"
@@ -233,13 +198,11 @@ export default function Home() {
               <ReleaseList />
             </CatalogProvider>
 
-            <aside className="coming-next">
-              <p className="mini-label">COMING NEXT</p>
+            <aside className="coming-next" aria-labelledby="catalog-spotlight-title">
+              <p className="mini-label">CATALOG SPOTLIGHT</p>
               <div className="coming-main">
-                <time dateTime="2026-07-20">
-                  20 &middot; 07 &middot; 2026
-                </time>
-                <h3>
+                <span className="coming-meta">LUKULU SELECTS</span>
+                <h3 id="catalog-spotlight-title">
                   LOST
                   <br />
                   IN A DREAM
@@ -247,16 +210,16 @@ export default function Home() {
                 <p>DJ NASTOR</p>
               </div>
               <div className="coming-footer">
-                <span>Aba&apos;Belive</span>
-                <time dateTime="2026-08-28">
-                  28 &middot; 08 &middot; 2026
-                </time>
+                <span>Discover the catalog</span>
+                <a href={catalogUrl} target="_blank" rel="noreferrer">
+                  Listen now <ExternalArrow />
+                </a>
               </div>
             </aside>
           </div>
         </section>
 
-        <section className="section highlights" aria-labelledby="sounds-title">
+        <section className="section highlights" id="listen" aria-labelledby="sounds-title">
           <div className="section-heading section-heading-compact">
             <p className="eyebrow">
               <span /> Listen first
@@ -267,17 +230,24 @@ export default function Home() {
           <MusicExperience catalogUrl={catalogUrl} spotifyUrl={spotifyPlaylistUrl} />
         </section>
 
-        <section className="section news" id="news" aria-labelledby="news-title">
-          <div className="section-heading">
-            <p className="eyebrow">
-              <span /> Signal feed
+        <section className="section lukulu-store" id="store" aria-labelledby="store-title">
+          <div className="section-heading section-heading-compact">
+            <p className="eyebrow"><span /> Made for producers</p>
+            <h2 id="store-title">Lukulu Store</h2>
+            <p>
+              VST instruments, FL Studio scripts, producer apps and music tech.
+              Browse the product roadmap and future releases in one place.
             </p>
-            <h2 id="news-title">News</h2>
-            <a href="/api/news" target="_blank" rel="noreferrer">
-              Live feed <ExternalArrow />
-            </a>
           </div>
+          <Storefront compact />
+        </section>
 
+        <section className="section signal-news" id="news" aria-labelledby="news-title">
+          <div className="section-heading section-heading-compact">
+            <p className="eyebrow"><span /> The signal</p>
+            <h2 id="news-title">Updates</h2>
+            <p>Short updates from the label, refreshed from connected sources whenever available.</p>
+          </div>
           <NewsFeed />
         </section>
 
@@ -341,62 +311,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section label-system" aria-labelledby="system-title">
-          <div className="section-heading section-heading-compact">
-            <p className="eyebrow">
-              <span /> Sound identity
-            </p>
-            <h2 id="system-title">The Lukulu sound</h2>
-            <p>
-              A clear creative filter helps artists understand the label and gives
-              listeners a stronger reason to explore the catalog.
-            </p>
-          </div>
-
-          <div className="value-grid">
-            {labelValues.map((value) => (
-              <article key={value.title} className="value-card">
-                <span>{value.kicker}</span>
-                <h3>{value.title}</h3>
-                <p>{value.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section artists" id="artists">
-          <div className="artist-intro">
-            <p className="eyebrow">
-              <span /> The family
-            </p>
-            <h2>
-              Artists moving
-              <br />
-              the sound forward.
-            </h2>
-            <p>
-              Producers, vocalists and collaborators shaping the Lukulu
-              catalog — a family of rooted, forward-facing African electronic music.
-            </p>
-          </div>
-
-          <div className="artist-list">
-            {artists.map((artist, index) => (
-              <a
-                href={catalogUrl}
-                target="_blank"
-                rel="noreferrer"
-                key={artist}
-                aria-label={artist + " on Traxsource"}
-              >
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{artist}</strong>
-                <b aria-hidden="true">↗</b>
-              </a>
-            ))}
-          </div>
-        </section>
-
         <section
           className="submission-portal"
           id="submissions"
@@ -457,35 +371,6 @@ export default function Home() {
                 Launch portal <ExternalArrow />
               </a>
             </div>
-          </div>
-        </section>
-
-        <section className="spotlight" aria-labelledby="spotlight-title">
-          <div className="spotlight-image">
-            <img
-              src="/assets/dj-nastor.jpg"
-              alt="DJ Nastor performing"
-              width="1200"
-              height="1200"
-              loading="lazy"
-              decoding="async"
-            />
-            <span aria-hidden="true">LUKULU / LABEL DIRECTOR</span>
-          </div>
-          <div className="spotlight-copy">
-            <p className="mini-label">LABEL SPOTLIGHT</p>
-            <h2 id="spotlight-title">DJ NASTOR</h2>
-            <p>
-              Founder, label director, producer and DJ championing Afro House
-              from South Africa to the world.
-            </p>
-            <a
-              href="https://open.spotify.com/artist/4LrRxXahvTwwytwPFl3vgF"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Explore the artist <ExternalArrow />
-            </a>
           </div>
         </section>
 

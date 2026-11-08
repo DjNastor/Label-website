@@ -41,6 +41,8 @@ async function renderPage() {
     musicExperienceSource,
     newsDataSource,
     newsClientSource,
+    storeDataSource,
+    storeClientSource,
   ] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/mobile-menu.tsx", import.meta.url), "utf8"),
@@ -52,6 +54,8 @@ async function renderPage() {
     readFile(new URL("../app/music-experience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/news-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/news-client.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/store-data.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/store-client.tsx", import.meta.url), "utf8"),
   ]);
   const mobileMenu = evaluateTsx(
     mobileMenuSource,
@@ -91,12 +95,17 @@ async function renderPage() {
   const newsClient = evaluateTsx(newsClientSource, "app/news-client.tsx", {
     "./news-data": newsData,
   });
+  const storeData = evaluateTsx(storeDataSource, "app/store-data.ts");
+  const storeClient = evaluateTsx(storeClientSource, "app/store-client.tsx", {
+    "./store-data": storeData,
+  });
   const page = evaluateTsx(pageSource, "app/page.tsx", {
     "./audio-preview-player": audioPreviewPlayer,
     "./catalog-client": catalogClient,
     "./mobile-menu": mobileMenu,
     "./music-experience": musicExperience,
     "./news-client": newsClient,
+    "./store-client": storeClient,
   });
 
   return renderToStaticMarkup(page.default());
@@ -109,8 +118,10 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /Rooted in <em>rhythm\.<\/em>/);
   assert.match(html, /Built for the <em>world\.<\/em>/);
   assert.match(html, /id="releases"/);
+  assert.match(html, /id="listen"/);
   assert.match(html, /id="news"/);
-  assert.match(html, /id="artists"/);
+  assert.match(html, /id="store"/);
+  assert.doesNotMatch(html, /id="artists"/);
   assert.match(html, /id="submissions"/);
   assert.match(html, /id="about"/);
   assert.match(html, /id="contact"/);
@@ -123,11 +134,20 @@ test("renders the Lukulu Recordings landing page", async () => {
   assert.match(html, /https:\/\/www\.labelradar\.com\/labels\/LukuluRecordings\/portal/);
   assert.match(html, /https:\/\/open\.spotify\.com\/playlist\/6skrxjmzEL0trnVnysbDdW/);
   assert.match(html, /Send your sound to Lukulu./);
-  assert.match(html, /Signal feed/);
+  assert.match(html, /Selected sounds/);
+  assert.match(html, /Lukulu Store/);
+  assert.match(html, /VST Plugins/);
+  assert.match(html, /Studio Tech/);
+  assert.match(html, /Product roadmap/);
+  assert.match(html, /From Lukulu/);
+  assert.match(html, /id="news"/);
+  assert.doesNotMatch(html, /Buy now/);
+  assert.match(html, /CATALOG SPOTLIGHT/);
+  assert.doesNotMatch(html, /COMING NEXT/);
   assert.match(html, /Beatport Greenroom label account 12524/);
   assert.match(html, /A zulu man/);
   assert.match(html, /Follow the sign/);
-  assert.match(html, /Beatport Greenroom catalog snapshot added/);
+
   assert.match(html, /Preview Reach Deep by DJ Nastor/);
   assert.doesNotMatch(html, /aria-label="Audio preview player"/);
   assert.match(html, /↗/);
@@ -143,7 +163,7 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
   ]);
   const manifest = JSON.parse(packageJson);
 
-  assert.match(layout, /Lukulu Recordings \| Afro House & Afro-Tech/);
+  assert.match(layout, /Lukulu Recordings \| Afro House, Afro-Tech & 3-Step/);
   assert.match(layout, /themeColor:\s*"#120d0a"/);
   assert.doesNotMatch(layout, /next\/font|fonts\.googleapis\.com/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
@@ -156,9 +176,11 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
     ".cover-card",
     ".audio-preview-player",
     ".audio-preview-waveform",
-    ".news-grid",
+    ".signal-carousel",
+    ".store-product",
+    ".store-grid",
     ".submission-portal",
-    ".artist-list",
+    ".store-page",
     "@font-face",
     "Maputo",
     "Afrika TUbuntu",
@@ -196,4 +218,85 @@ test("keeps Lukulu metadata, assets, and responsive styles production-ready", as
   }
 
   await assert.rejects(access(new URL("app/_sites-preview", projectRoot)));
+});
+
+test("store never marks an item purchasable without an HTTPS checkout and ZAR price", async () => {
+  const source = await readFile(new URL("../app/store-data.ts", import.meta.url), "utf8");
+  const { publicStoreProduct, storeConcepts } = evaluateTsx(source, "app/store-data.ts");
+
+  assert.ok(storeConcepts.every((item) =>
+    item.status === "coming_soon" && item.checkoutUrl === null && item.priceZar === null,
+  ));
+
+  const base = {
+    id: "validation-test",
+    name: "Test product",
+    category: "VST Plugins",
+    description: "Example only, not a real product",
+    status: "available",
+    priceZar: 249,
+  };
+
+  const insecure = publicStoreProduct({ ...base, checkoutUrl: "http://example.com/checkout" });
+  assert.equal(insecure.status, "coming_soon");
+  assert.equal(insecure.checkoutUrl, null);
+  assert.equal(insecure.priceZar, null);
+
+  const missingPrice = publicStoreProduct({
+    ...base, priceZar: null, checkoutUrl: "https://example.com/checkout",
+  });
+  assert.equal(missingPrice.status, "coming_soon");
+
+  const configured = publicStoreProduct({
+    ...base, checkoutUrl: "https://example.com/checkout",
+  });
+  assert.equal(configured.status, "available");
+  assert.equal(configured.priceZar, 249);
+  assert.match(configured.checkoutUrl, /^https:\/\//);
+});
+
+
+test("news API aggregates RSS and Atom entries with their actual article links", async () => {
+  const [routeSource, newsDataSource] = await Promise.all([
+    readFile(new URL("../app/api/news/route.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/news-data.ts", import.meta.url), "utf8"),
+  ]);
+  const newsData = evaluateTsx(newsDataSource, "app/news-data.ts");
+  const route = evaluateTsx(routeSource, "app/api/news/route.ts", {
+    "../../news-data": newsData,
+  });
+  const originalFetch = globalThis.fetch;
+
+  const atom = [
+    "<feed><entry><title>New music production update</title>",
+    '<link rel="self" href="https://example.com/feed/entry" />',
+    '<link rel="alternate" href="https://example.com/atom-article" />',
+    "<summary>Useful studio news</summary>",
+    "<published>2026-11-08T08:00:00Z</published></entry></feed>",
+  ].join("");
+  const rss = [
+    "<rss><channel><item><title>New VST feature</title>",
+    "<link>https://example.com/rss-article</link>",
+    "<description>Plugin release notes</description>",
+    "<pubDate>Sat, 07 Nov 2026 08:00:00 GMT</pubDate>",
+    "</item></channel></rss>",
+  ].join("");
+
+  globalThis.fetch = async (url) =>
+    new Response(String(url).includes("musictech.com") ? atom : rss, {
+      status: 200,
+      headers: { "Content-Type": "application/xml" },
+    });
+
+  try {
+    const response = await route.GET();
+    const payload = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(payload.source, "aggregated");
+    assert.equal(payload.items.length, 2);
+    assert.equal(payload.items[0].href, "https://example.com/atom-article");
+    assert.equal(payload.items[1].href, "https://example.com/rss-article");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });

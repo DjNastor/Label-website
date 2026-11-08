@@ -5,7 +5,7 @@ export type NewsItem = {
   source: string;
   href: string;
   publishedAt: string;
-  type: "release" | "press" | "social";
+  type: "release" | "press" | "social" | "industry";
 };
 
 export type NewsPayload = {

@@ -1,4 +1,4 @@
-# vinext-starter
+# Lukulu Recordings — Website
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
@@ -32,9 +32,14 @@ This starter does not use `wrangler.jsonc`.
 - `/api/catalog-sync` is the platform catalog refresh contract. It tries the
   configured Traxsource and Beatport label URLs, returns normalized release
   rows, and falls back to the curated catalog when a source blocks or times out.
-- `/api/news` is the News tab aggregation contract. Set comma-separated
-  `SOCIAL_FEED_URLS` to RSS, Atom, JSON Feed, or simple JSON endpoints; the UI
-  auto-refreshes every five minutes.
+- `/api/news` automatically aggregates short headlines from MusicTech and
+  Attack Magazine RSS feeds. Set comma-separated `SOCIAL_FEED_URLS` to override
+  those defaults with your own RSS, Atom or JSON Feed sources. Sources are requested in parallel, and Atom article links are supported. The homepage
+  rotates linked stories every eight seconds and refreshes its feed every five
+  minutes; if feeds fail, it displays clearly labelled curated label updates.
+- `/api/store` loads digital products from `STORE_CATALOG_URL` (an HTTPS URL
+  serving JSON). Until a catalog is connected, all product concepts are marked
+  `coming_soon` and no checkout links are active.
 - Demo submissions route through the Lukulu Recordings LabelRadar portal:
   `https://www.labelradar.com/labels/LukuluRecordings/portal`.
 - The persistent preview player supports `previewUrl` fields in catalog data.
@@ -47,7 +52,63 @@ Optional production env vars:
 TRAXSOURCE_LABEL_URL=https://www.traxsource.com/label/53294/lukulu-recordings
 BEATPORT_LABEL_URL=https://www.beatport.com/label/lukulu-recordings/53294
 SOCIAL_FEED_URLS=
+STORE_CATALOG_URL=
 ```
+
+## Homepage, Store and Auto News (November 2026)
+
+The simplified public navigation is **Music / Store / Updates / Submit / About**.
+The old artists listing has been replaced with a production-first Lukulu Store;
+the releases, selected sounds, demo portal, company story and contact details
+remain. The long sound-values and founder spotlight sections were removed to
+reduce homepage scrolling.
+
+**Store:** `/store` lets visitors filter VST Plugins, FL Studio Scripts,
+Production Apps and Studio Tech. It accepts a remotely maintained catalog via
+`STORE_CATALOG_URL`. Serve JSON with either a top-level array or
+`{"products": [...]}`, where each row has:
+
+```json
+{
+  "id": "your-unique-id",
+  "name": "Your actual product",
+  "category": "VST Plugins",
+  "description": "A clear description of your published product.",
+  "status": "available",
+  "priceZar": 249,
+  "checkoutUrl": "https://your-payment-provider.example/your-checkout-link",
+  "compatibility": "Your confirmed OS, DAW and plugin-format requirements"
+}
+```
+
+The object above is an **illustrative configuration example**, not a real
+Lukulu product or payment link. Product titles, descriptions, and release
+requirements must be approved before publishing. For a product to become
+purchasable, `status` must be `available`, the ZAR price must be positive,
+and `checkoutUrl` must be HTTPS. Otherwise it remains labelled Coming soon
+with an email enquiry link. The site does **not** process payments itself,
+provide protected downloads, issue licences or collect card details. Those
+need a connected commerce provider and a tested fulfilment flow.
+
+**News:** `/api/news` now defaults to syndicated headlines from MusicTech
+(`https://musictech.com/feed/`) and Attack Magazine
+(`https://www.attackmagazine.com/feed/`). Headlines link to the publisher;
+brief excerpts are capped at 200 characters. Override `SOCIAL_FEED_URLS`
+with a comma-separated feed list if desired. The page indicates whether
+stories come from connected feeds or curated fallbacks. Auto-rotation pauses
+for visitors who prefer reduced motion, and also offers manual controls.
+
+To validate the branch before production:
+
+```bash
+npm ci
+npm run lint
+npm test
+```
+
+Review products, verify feed sources and links, and visually inspect mobile
+and desktop previews before merging. The existing catalogue and demo endpoints
+remain as before.
 
 ## Workspace Auth Headers
 
@@ -111,7 +172,7 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 
 - `npm run dev`: start local development
 - `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
+- `npm test`: build the site and run rendered-page, store checkout-safety and RSS/Atom news tests
 - `npm run db:generate`: generate Drizzle migrations after schema changes
 
 ## Learn More
