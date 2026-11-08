@@ -1,4 +1,4 @@
-# vinext-starter
+# Lukulu Recordings — Website
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
@@ -34,7 +34,7 @@ This starter does not use `wrangler.jsonc`.
   rows, and falls back to the curated catalog when a source blocks or times out.
 - `/api/news` automatically aggregates short headlines from MusicTech and
   Attack Magazine RSS feeds. Set comma-separated `SOCIAL_FEED_URLS` to override
-  those defaults with your own RSS, Atom or JSON Feed sources. The homepage
+  those defaults with your own RSS, Atom or JSON Feed sources. Sources are requested in parallel, and Atom article links are supported. The homepage
   rotates linked stories every eight seconds and refreshes its feed every five
   minutes; if feeds fail, it displays clearly labelled curated label updates.
 - `/api/store` loads digital products from `STORE_CATALOG_URL` (an HTTPS URL
@@ -172,7 +172,7 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 
 - `npm run dev`: start local development
 - `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
+- `npm test`: build the site and run rendered-page, store checkout-safety and RSS/Atom news tests
 - `npm run db:generate`: generate Drizzle migrations after schema changes
 
 ## Learn More
