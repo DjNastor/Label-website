@@ -254,3 +254,49 @@ test("store never marks an item purchasable without an HTTPS checkout and ZAR pr
   assert.equal(configured.priceZar, 249);
   assert.match(configured.checkoutUrl, /^https:\/\//);
 });
+
+
+test("news API aggregates RSS and Atom entries with their actual article links", async () => {
+  const [routeSource, newsDataSource] = await Promise.all([
+    readFile(new URL("../app/api/news/route.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/news-data.ts", import.meta.url), "utf8"),
+  ]);
+  const newsData = evaluateTsx(newsDataSource, "app/news-data.ts");
+  const route = evaluateTsx(routeSource, "app/api/news/route.ts", {
+    "../../news-data": newsData,
+  });
+  const originalFetch = globalThis.fetch;
+
+  const atom = [
+    "<feed><entry><title>New music production update</title>",
+    '<link rel="self" href="https://example.com/feed/entry" />',
+    '<link rel="alternate" href="https://example.com/atom-article" />',
+    "<summary>Useful studio news</summary>",
+    "<published>2026-11-08T08:00:00Z</published></entry></feed>",
+  ].join("");
+  const rss = [
+    "<rss><channel><item><title>New VST feature</title>",
+    "<link>https://example.com/rss-article</link>",
+    "<description>Plugin release notes</description>",
+    "<pubDate>Sat, 07 Nov 2026 08:00:00 GMT</pubDate>",
+    "</item></channel></rss>",
+  ].join("");
+
+  globalThis.fetch = async (url) =>
+    new Response(String(url).includes("musictech.com") ? atom : rss, {
+      status: 200,
+      headers: { "Content-Type": "application/xml" },
+    });
+
+  try {
+    const response = await route.GET();
+    const payload = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(payload.source, "aggregated");
+    assert.equal(payload.items.length, 2);
+    assert.equal(payload.items[0].href, "https://example.com/atom-article");
+    assert.equal(payload.items[1].href, "https://example.com/rss-article");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
