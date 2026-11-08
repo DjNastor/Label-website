@@ -26,22 +26,21 @@ export async function GET() {
 }
 
 async function collectFeedItems(): Promise<NewsItem[]> {
-  const imported: NewsItem[] = [];
-
-  for (const feedUrl of feedUrls) {
+  // Read independent sources concurrently so one slow publisher cannot delay the others.
+  const feedResults = await Promise.all(feedUrls.map(async (feedUrl) => {
     try {
       const response = await fetchWithTimeout(feedUrl);
-      if (!response.ok) continue;
+      if (!response.ok) return [];
 
-      const text = await response.text();
-      const parsedJson = parseJsonFeed(feedUrl, text);
-      imported.push(...(parsedJson.length ? parsedJson : parseXmlFeed(feedUrl, text)));
+      const body = await response.text();
+      const parsedJson = parseJsonFeed(feedUrl, body);
+      return parsedJson.length ? parsedJson : parseXmlFeed(feedUrl, body);
     } catch {
-      continue;
+      return [];
     }
-  }
+  }));
 
-  const unique = new Map(imported.map((item) => [item.href, item]));
+  const unique = new Map(feedResults.flat().map((item) => [item.href, item]));
   return [...unique.values()]
     .sort(
       (a, b) =>
@@ -117,7 +116,7 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
         tagText(block, "content") ||
         title,
     ).slice(0, 200);
-    const href = safeUrl(tagText(block, "link")) || feedUrl;
+    const href = atomLink(block) || safeUrl(tagText(block, "link")) || feedUrl;
 
     return {
       id: "xml-" + index + "-" + hashText(title),
@@ -133,6 +132,25 @@ function parseXmlFeed(feedUrl: string, body: string): NewsItem[] {
       type: "industry",
     };
   });
+}
+
+// Atom entries commonly use <link href="..." rel="alternate" /> instead of RSS link text.
+function atomLink(block: string): string {
+  const links = [...block.matchAll(/<link\\b([^>]*)\\/?>/gi)]
+    .map((match) => {
+      const attributes = match[1];
+      const href = attributes.match(/\\bhref\\s*=\\s*(?:"([^"]*)"|'([^']*)')/i);
+      const rel = attributes.match(/\\brel\\s*=\\s*(?:"([^"]*)"|'([^']*)')/i);
+      return {
+        href: safeUrl(decodeHtml(href?.[1] || href?.[2] || "")),
+        rel: rel?.[1] || rel?.[2] || "",
+      };
+    })
+    .filter((link) => link.href);
+
+  return links.find((link) => link.rel === "alternate")?.href ||
+    links.find((link) => !link.rel)?.href ||
+    links[0]?.href || "";
 }
 
 function asRecord(value: unknown): Record<string, unknown> {
